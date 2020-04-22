@@ -3,10 +3,27 @@ function code(block, args) {
 }
 
 window.webcamIndex = null
+window.videoSrc = null
+window.imageSrc = null
+// webcam mapped to s3
 Blockly.JavaScript['webcam'] = function(block) {
   var dropdown_buffer = block.getFieldValue('buffer');
   window.webcamIndex = dropdown_buffer
   return `src(s3)`
+};
+
+// video mapped to s2
+Blockly.JavaScript['video'] = function(block) {
+  var text_src = block.getFieldValue('src');
+  window.videoSrc = text_src
+  return `src(s2)`
+};
+
+// image mapped to s1
+Blockly.JavaScript['image'] = function(block) {
+  var text_src = block.getFieldValue('src');
+  window.imageSrc = text_src
+  return `src(s1)`
 };
 
 Blockly.JavaScript['osc'] = function(block) {

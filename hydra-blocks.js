@@ -1,4 +1,34 @@
 Blockly.defineBlocksWithJsonArray([{
+  "type": "video",
+  "message0": "video(src: %1 )",
+  "args0": [
+    {
+      "type": "field_input",
+      "name": "src",
+      "text": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+}, {
+  "type": "image",
+  "message0": "image(src: %1 )",
+  "args0": [
+    {
+      "type": "field_input",
+      "name": "src",
+      "text": "https://upload.wikimedia.org/wikipedia/commons/a/aa/TwibrightLinksTestCard.png"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+}, {
   "type": "webcam",
   "message0": "webcam(input: %1 )",
   "args0": [

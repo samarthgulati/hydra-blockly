@@ -52,6 +52,20 @@ function updateCanvas(e) {
 	if(window.webcamIndex !== null) {
 		code = 's3.initCam(window.webcamIndex);\n' + code
 	}
+	if(window.videoSrc !== null) {
+		code = `var vid = document.createElement('video');
+vid.crossOrigin = 'anonymous';
+vid.autoplay = true;
+vid.loop = true;
+vid.src = window.videoSrc;
+s2.init({src: vid});\n` + code
+	}
+	if(window.imageSrc !== null) {
+		code = `var imgEl = document.createElement('img');
+imgEl.crossOrigin = 'anonymous';
+imgEl.src = window.imageSrc;
+s1.init({src: imgEl});\n` + code
+	}
 	consoleEl.textContent = code;
   if(liveUpdate.checked || e.type === 'click') {
 		try {
