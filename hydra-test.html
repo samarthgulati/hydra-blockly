@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <canvas width="491px" height="540px" id="hydraCanvas"></canvas>
+	<script src="image-editing-glsl-functions.js"></script>
+  <script src="hydra.js"></script>
+  <script>
+    var hydra = new Hydra({
+      canvas: hydraCanvas
+		});
+		blendmodes_glsl_fns.forEach(function(fn) {
+			hydra.synth.setFunction(fn)
+		})
+		levels_glsl_fns.forEach(function(fn) {
+			hydra.synth.setFunction(fn)
+    })
+    css_filter_glsl_fns.forEach(function(fn) {
+			hydra.synth.setFunction(fn)
+		})
+		osc().layer(gradient().opacity(0.5)).out()
+  </script>
+</body>
+</html>
