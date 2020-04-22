@@ -1,0 +1,216 @@
+<!-- <script src="hydra-code-generator.js"></script> -->
+<!-- <script src="../../blocks_compressed.js"></script> -->
+<!-- <script src="../../msg/js/en.js"></script> -->
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+  <title>Blockly Demo: Generating JavaScript</title>
+  <script src="../../blockly_compressed.js"></script>
+  <script src="../../javascript_compressed.js"></script>
+  <script src="hydra-blocks-generator.js"></script>
+  <script src="hydra-blocks.js"></script>
+	<style>
+		body {
+			background-color: #fff;
+			font-family: sans-serif;
+		}
+
+		.environment {
+      display: flex;
+    } 
+    details {
+      margin-top: 0.5rem;
+      position: relative;
+      width: 600px;
+    }
+    #copyCode {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+	</style>
+</head>
+
+<body>
+	<p>
+    <label for="liveUpdate">Live Update</label>
+		<input type="checkbox" id="liveUpdate" checked>
+		<button disabled id="runBtn">Run</button>
+	</p>
+  <div class="environment">
+    <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
+	  <canvas id="hydraCanvas" width="480px" height="480px"></canvas>
+  </div>
+  <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
+    <category name="Source / Texture">
+      <block type="image">
+        <field name="src">https://upload.wikimedia.org/wikipedia/commons/a/aa/TwibrightLinksTestCard.png</field>
+      </block>
+      <block type="video">
+        <field name="src">http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4</field>
+      </block>
+      <block type="webcam">
+        <field name="input">0</field>
+      </block>
+      <block type="osc">
+        <field name="frequency">60</field>
+        <field name="sync">0.1</field>
+        <field name="offset">0</field>
+      </block>
+      <block type="noise">
+        <field name="scale">10</field>
+        <field name="offset">0.1</field>
+      </block>
+      <block type="shape">
+        <field name="sides">3</field>
+        <field name="radius">0.3</field>
+        <field name="smoothing">0.01</field>
+      </block>
+      <block type="solid">
+        <field name="r">0</field>
+        <field name="g">0</field>
+        <field name="b">0</field>
+        <field name="a">1</field>
+      </block>
+      <block type="voronoi">
+        <field name="scale">5</field>
+        <field name="speed">0.3</field>
+        <field name="blending">0.3</field>
+      </block>
+      <block type="gradient">
+        <field name="speed">0.01</field>
+      </block>
+    </category>
+    <category name="Output">
+      <block type="out">
+        <field name="buffer">o0</field>
+      </block>
+    </category>
+    <category name="Operators">
+      <block type="blendMode">
+        <field name="mode">darken</field>
+      </block>
+      <block type="add">
+        <field name="amount">0.5</field>
+      </block>
+      <block type="blend">
+        <field name="amount">0.5</field>
+      </block>
+      <block type="mult">
+        <field name="amount">0.5</field>
+      </block>
+      <block type="mask">
+        <field name="reps">3</field>
+        <field name="offset">0.5</field>
+      </block>
+      <block type="layer"></block>
+      <block type="diff"></block>
+    </category>
+    <category name="Color Adjust">
+      <block type="gammaCorrection">
+        <field name="amount">0.5</field>
+      </block>
+      <block type="levelsInputRange">
+        <field name="min">0.0</field>
+        <field name="max">1.0</field>
+      </block>
+      <block type="levelsOutputRange">
+        <field name="min">0.0</field>
+        <field name="max">1.0</field>
+      </block>
+      <block type="brightness">
+        <field name="amount">0.4</field>
+      </block>
+      <block type="contrast">
+        <field name="amount">1.6</field>
+      </block>
+      <block type="colorama">
+        <field name="amount">1.6</field>
+      </block>
+      <block type="invert">
+        <field name="amount">1</field>
+      </block>
+      <block type="thresh">
+        <field name="threshold">0.5</field>
+        <field name="tolerance">0.04</field>
+      </block>
+      <block type="luma">
+        <field name="threshold">0.5</field>
+        <field name="tolerance">0.1</field>
+      </block>
+      <block type="color">
+        <field name="r">0.5</field>
+        <field name="g">0.1</field>
+        <field name="b">0.1</field>
+      </block>
+      <block type="posterize">
+        <field name="bins">3</field>
+        <field name="gamma">0.6</field>
+      </block>
+      <block type="saturate">
+        <field name="amount">1</field>
+      </block>
+      <block type="shift">
+        <field name="r">0.5</field>
+        <field name="g">0.5</field>
+        <field name="b">0.5</field>
+        <field name="a">0.5</field>
+      </block>
+    </category>
+    <category name="Geometry Transform">
+      <block type="kaleid">
+        <field name="nSides">4</field>
+      </block>
+      <block type="pixelate">
+        <field name="x">20</field>
+        <field name="y">20</field>
+      </block>
+      <block type="rotate">
+        <field name="angle">10</field>
+        <field name="speed">0</field>
+      </block>
+      <block type="scrollX">
+        <field name="amount">0.5</field>
+        <field name="speed">0</field>
+      </block>
+      <block type="scrollY">
+        <field name="amount">0.5</field>
+        <field name="speed">0</field>
+      </block>
+      <block type="scale">
+        <field name="size">1.5</field>
+        <field name="xMult">1</field>
+        <field name="yMult">1</field>
+      </block>
+      <block type="repeat">
+        <field name="repeatX">3</field>
+        <field name="repeatY">3</field>
+        <field name="offsetX">0</field>
+        <field name="offsetY">0</field>
+      </block>
+      <block type="repeatX">
+        <field name="reps">3</field>
+        <field name="offset">0</field>
+      </block>
+      <block type="repeatY">
+        <field name="reps">3</field>
+        <field name="offset">0</field>
+      </block>
+    </category>
+  </xml>
+  <xml xmlns="https://developers.google.com/blockly/xml" id="workspaceBlocks" style="display: none"></xml>
+  <details open>
+    <button id="copyCode">Copy Code</button>
+    <summary>
+      Console
+    </summary>
+    <pre id="consoleEl"></pre>
+  </details>
+  <script src="hydra.js"></script>
+  <script src="image-editing-glsl-functions.js"></script>
+  <script src="workspace.js"></script>
+</body>
+
+</html>
