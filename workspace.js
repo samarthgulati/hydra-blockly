@@ -9,10 +9,13 @@ var hydra = new Hydra({
 });
 blendmodes_glsl_fns.forEach(function(fn) {
   hydra.synth.setFunction(fn)
-})
+});
 levels_glsl_fns.forEach(function(fn) {
   hydra.synth.setFunction(fn)
-})
+});
+css_filter_glsl_fns.forEach(function(fn) {
+  hydra.synth.setFunction(fn)
+});
 /* TODO: Change toolbox XML ID if necessary. Can export toolbox XML from Workspace Factory. */
 var toolbox = document.getElementById("toolbox");
 

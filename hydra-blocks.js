@@ -988,4 +988,68 @@ Blockly.defineBlocksWithJsonArray([{
   "colour": 60,
   "tooltip": "",
   "helpUrl": ""
-}]);
+},{
+  "type": "opacity",
+  "message0": ".opacity( amount: %1 )",
+  "args0": [
+    {
+      "type": "field_number",
+      "name": "amount",
+      "value": 0.5,
+      "precision": 0.01
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 60,
+  "tooltip": "",
+  "helpUrl": ""
+},{
+  "type": "hueRotate",
+  "message0": ".hueRotate( amount: %1 )",
+  "args0": [
+    {
+      "type": "field_number",
+      "name": "amount",
+      "value": 0.5,
+      "precision": 0.01
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 60,
+  "tooltip": "",
+  "helpUrl": ""
+},{
+  "type": "sepia",
+  "message0": ".sepia( amount: %1 )",
+  "args0": [
+    {
+      "type": "field_number",
+      "name": "amount",
+      "value": 0.5,
+      "precision": 0.01
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 60,
+  "tooltip": "",
+  "helpUrl": ""
+},{
+  "type": "grayscale",
+  "message0": ".grayscale( amount: %1 )",
+  "args0": [
+    {
+      "type": "field_number",
+      "name": "amount",
+      "value": 0.5,
+      "precision": 0.01
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 60,
+  "tooltip": "",
+  "helpUrl": ""
+},]);

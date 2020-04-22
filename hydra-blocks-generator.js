@@ -311,3 +311,31 @@ Blockly.JavaScript['levelsOutputRange'] = function(block) {
   ]
   return code(block, args);
 };
+
+Blockly.JavaScript['opacity'] = function(block) {
+  var args = [
+    block.getFieldValue('amount'),
+  ]
+  return code(block, args);
+};
+
+Blockly.JavaScript['hueRotate'] = function(block) {
+  var args = [
+    block.getFieldValue('amount'),
+  ]
+  return code(block, args);
+};
+
+Blockly.JavaScript['grayscale'] = function(block) {
+  var args = [
+    block.getFieldValue('amount'),
+  ]
+  return code(block, args);
+};
+
+Blockly.JavaScript['sepia'] = function(block) {
+  var args = [
+    block.getFieldValue('amount'),
+  ]
+  return code(block, args);
+};
