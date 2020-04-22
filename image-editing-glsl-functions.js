@@ -509,3 +509,68 @@ var levels_glsl_fns = [
     glsl: `   return vec4(mix(vec3(minOutput), vec3(maxOutput), _c0.rgb), _c0.a);`
   }
 ];
+
+var css_filter_glsl_fns = [
+  {
+    name: "opacity",
+    type: "color",
+    inputs: [
+      {
+        type: "float",
+        name: "amount",
+        default: 1.0
+      }
+    ],
+    glsl: `   return vec4(_c0.rgb, amount);`
+  },
+  {
+    name: "hueRotate",
+    type: "color",
+    inputs: [
+      {
+        type: "float",
+        name: "amount",
+        default: 0.0
+      }
+    ],
+    glsl: `   vec3 c = _rgbToHsv(_c0.rgb);
+    c.x = c.x + amount;
+    return vec4(_hsvToRgb(c), _c0.a);`
+  },
+  {
+    name: "sepia",
+    type: "color",
+    inputs: [
+      {
+        type: "float",
+        name: "amount",
+        default: 0.0
+      }
+    ],
+    glsl: ` vec4 c;
+    c.r = (0.393 + 0.607 * (1.0 - amount)) * _c0.r + (0.769 - 0.769 * (1.0 - amount)) * _c0.g + (0.189 - 0.189 * (1.0 - amount)) * _c0.b;
+    c.g = (0.349 - 0.349 * (1.0 - amount)) * _c0.r + (0.686 + 0.314 * (1.0 - amount)) * _c0.g + (0.168 - 0.168 * (1.0 - amount)) * _c0.b;
+    c.b = (0.272 - 0.272 * (1.0 - amount)) * _c0.r + (0.534 - 0.534 * (1.0 - amount)) * _c0.g + (0.131 + 0.869 * (1.0 - amount)) * _c0.b;
+    c.a = _c0.a;
+    return c;
+    `
+  },
+  {
+    name: "grayscale",
+    type: "color",
+    inputs: [
+      {
+        type: "float",
+        name: "amount",
+        default: 0.0
+      }
+    ],
+    glsl: ` vec4 c;
+    c.r = (0.2126 + 0.7874 * (1.0 - amount)) * _c0.r + (0.7152 - 0.7152  * (1.0 - amount)) * _c0.g + (0.0722 - 0.0722 * (1.0 - amount)) * _c0.b;
+    c.g = (0.2126 - 0.2126 * (1.0 - amount)) * _c0.r + (0.7152 + 0.2848  * (1.0 - amount)) * _c0.g + (0.0722 - 0.0722 * (1.0 - amount)) * _c0.b;
+    c.b = (0.2126 - 0.2126 * (1.0 - amount)) * _c0.r + (0.7152 - 0.7152  * (1.0 - amount)) * _c0.g + (0.0722 + 0.9278 * (1.0 - amount)) * _c0.b;
+    c.a = _c0.a;
+    return c;
+    `
+  }
+];
