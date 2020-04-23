@@ -67,7 +67,7 @@ function addSpecialBlock(fn) {
         "helpUrl": ""
       }]);
       Blockly.JavaScript['anon'] = function(block) {
-        if(block.getNextBlock() === null && block.getPreviousBlock() === null) return '';
+        if(block.getSurroundParent() === null) return '';
         var value_function = Blockly.JavaScript.valueToCode(block, 'fn', Blockly.JavaScript.ORDER_ATOMIC);
         value_function = value_function.substring(1, value_function.length - 1);
         return [`() => (${value_function})`, Blockly.JavaScript.ORDER_NONE];
