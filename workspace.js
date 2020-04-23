@@ -1,4 +1,5 @@
 var liveUpdate = document.getElementById("liveUpdate");
+var liveCoding = document.getElementById("liveCoding");
 var consoleEl = document.getElementById("consoleEl");
 var runBtn = document.getElementById("runBtn");
 var copyCode = document.getElementById("copyCode");
@@ -92,11 +93,18 @@ function copyCodeToClipboard() {
 
 runBtn.addEventListener('click', updateCanvas);
 copyCode.addEventListener('click', copyCodeToClipboard);
+liveCoding.addEventListener('change', function() {
+	if(liveCoding.checked) {
+		document.body.classList.add('liveCoding');
+	} else {
+		document.body.classList.remove('liveCoding');
+	}
+})
 liveUpdate.addEventListener('change', function() {
 	if(liveUpdate.checked) {
-		runBtn.setAttribute('disabled', true)
+		runBtn.setAttribute('disabled', true);
 	} else {
-		runBtn.removeAttribute('disabled')
+		runBtn.removeAttribute('disabled');
 	}
 })
 workspace.addChangeListener(updateCanvas);

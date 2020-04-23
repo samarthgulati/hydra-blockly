@@ -18,3 +18,68 @@ details {
   right: 0;
   top: 0;
 }
+
+body.liveCoding svg.blocklySvg text {
+  fill: white !important;
+}
+
+body.liveCoding svg.blocklySvg {
+  background: rgba(0,0,0,0) !important;
+}
+
+body.liveCoding .blocklyMainBackground {
+  stroke: none;
+}
+
+body.liveCoding .blocklyFlyout path,
+body.liveCoding svg.blocklySvg path,
+body.liveCoding svg.blocklySvg .blocklyFieldRect {
+  fill: rgba(0,0,0,0.25) !important;
+}
+
+body.liveCoding .geras-renderer.classic-theme .blocklySelected>.blocklyPath {
+  stroke-width: 1px;
+}
+
+body.liveCoding .blocklyFlyout path {
+  fill: rgba(0,0,0,0.5) !important;
+}
+
+body.liveCoding {
+  text-shadow: 1px  1px 1px black,
+              -1px  1px 1px black,
+               1px -1px 1px black,
+              -1px -1px 1px black; 
+}
+
+
+body.liveCoding .blocklyText {
+  text-shadow: none;
+}
+
+
+body.liveCoding .blocklyToolboxDiv {
+  background: rgba(0,0,0,0) !important;
+}
+
+body.liveCoding {
+  background: black;
+  color: white !important;
+}
+
+body.liveCoding #blocklyDiv {
+  width: 100% !important;
+}
+
+body.liveCoding #hydraCanvas {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: -1;
+}
+
+body.liveCoding details {
+  width: 100%;
+}

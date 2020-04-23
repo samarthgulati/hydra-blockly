@@ -1,4 +1,7 @@
 var hydraCanvas = document.getElementById("hydraCanvas");
+var aspectRatio = window.innerHeight / window.innerWidth;
+hydraCanvas.width = 480;
+hydraCanvas.height = 480 * aspectRatio;
 var hydra = new Hydra({
 	canvas: hydraCanvas
 });

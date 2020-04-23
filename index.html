@@ -10,11 +10,13 @@
   <p>
     <label for="liveUpdate">Live Update</label>
 		<input type="checkbox" id="liveUpdate" checked>
-		<button disabled id="runBtn">Run</button>
+    <button disabled id="runBtn">Run</button>
+    <label for="liveCoding">Live Coding</label>
+		<input type="checkbox" id="liveCoding">
 	</p>
   <div class="environment">
     <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
-	  <canvas id="hydraCanvas" width="480px" height="480px"></canvas>
+	  <canvas id="hydraCanvas"></canvas>
   </div>
   <details open>
     <button id="copyCode">Copy Code</button>
