@@ -44,7 +44,7 @@ function code(block, args, dot) {
   return `${dot ? '' : '.'}${block.type}(${args.join(',')})`
 }
 
-var unsupportedFns = ['prev', 'sum'];
+var unsupportedFns = ['r', 'g', 'b', 'a', 'prev', 'sum'];
 var specialFns = [{
   name: 'webcam',
   type: 'src'
