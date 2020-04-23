@@ -1,11 +1,20 @@
-/* CSS files add styling rules to your content */
-
 body {
-  font-family: helvetica, arial, sans-serif;
-  margin: 2em;
+  background-color: #fff;
+  font-family: sans-serif;
 }
 
-h1 {
-  font-style: italic;
-  color: #373fff;
+.environment {
+  display: flex;
+} 
+
+details {
+  margin-top: 0.5rem;
+  position: relative;
+  width: 600px;
+}
+
+#copyCode {
+  position: absolute;
+  right: 0;
+  top: 0;
 }
