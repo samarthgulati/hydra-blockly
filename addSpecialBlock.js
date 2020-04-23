@@ -67,6 +67,7 @@ function addSpecialBlock(fn) {
         "helpUrl": ""
       }]);
       Blockly.JavaScript['anon'] = function(block) {
+        if(block.getNextBlock() === null && block.getPreviousBlock() === null) return '';
         var value_function = Blockly.JavaScript.valueToCode(block, 'fn', Blockly.JavaScript.ORDER_ATOMIC);
         value_function = value_function.substring(1, value_function.length - 1);
         return [`() => (${value_function})`, Blockly.JavaScript.ORDER_NONE];
@@ -116,6 +117,7 @@ function addSpecialBlock(fn) {
         "helpUrl": ""
       }]);
       Blockly.JavaScript['out'] = function(block) {
+        if(block.getNextBlock() === null && block.getPreviousBlock() === null) return '';
         var args = [
           block.getFieldValue('buffer'),
         ]
@@ -156,6 +158,7 @@ function addSpecialBlock(fn) {
       }]);
       // webcam mapped to s3
       Blockly.JavaScript['webcam'] = function(block) {
+        if(block.getNextBlock() === null && block.getPreviousBlock() === null) return '';
         var dropdown_buffer = block.getFieldValue('buffer');
         window.webcamSrc = dropdown_buffer
         return `src(s3)`
@@ -187,6 +190,7 @@ function addSpecialBlock(fn) {
 
       // image mapped to s1
       Blockly.JavaScript['image'] = function(block) {
+        if(block.getNextBlock() === null && block.getPreviousBlock() === null) return '';
         var text_src = block.getFieldValue('src');
         window.imageSrc = text_src
         return `src(s1)`
@@ -217,6 +221,7 @@ function addSpecialBlock(fn) {
       }]);
       // video mapped to s2
       Blockly.JavaScript['video'] = function(block) {
+        if(block.getNextBlock() === null && block.getPreviousBlock() === null) return '';
         var text_src = block.getFieldValue('src');
         window.videoSrc = text_src
         return `src(s2)`

@@ -109,6 +109,7 @@ hydraFns.forEach(fn => {
 		helpUrl: ''
   }]);
 	Blockly.JavaScript[fn.name] = function (block) {
+    if(block.getNextBlock() === null && block.getPreviousBlock() === null) return '';
     var args = fn.inputs.map(ip => {
       if(ip.type === 'vec4') {
         return Blockly.JavaScript.statementToCode(block, ip.name);
