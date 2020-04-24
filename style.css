@@ -101,3 +101,7 @@ body.liveCoding #hydraCanvas {
 body.liveCoding details {
   width: 100%;
 }
+
+body.liveCoding #hydraCanvas.moveToTop {
+  z-index: 100;
+}

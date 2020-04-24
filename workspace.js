@@ -113,12 +113,15 @@ liveCoding.addEventListener('change', function() {
 	} else {
 		document.body.classList.remove('liveCoding');
 	}
-})
+});
 liveUpdate.addEventListener('change', function() {
 	if(liveUpdate.checked) {
 		runBtn.setAttribute('disabled', true);
 	} else {
 		runBtn.removeAttribute('disabled');
 	}
-})
+});
 workspace.addChangeListener(updateCanvas);
+hydraCanvas.addEventListener('dblclick', function(e) {
+	hydraCanvas.classList.toggle('moveToTop');
+});
