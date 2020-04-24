@@ -29,7 +29,34 @@ var hydraFnTypesToBlocklyCategories = {
 var hueDivisor = Object.keys(hydraFnTypesToBlocklyCategories).length + 1;
 var hueMultiplier = 360 / hueDivisor;
 var toolbox = '<xml xmlns="https://developers.google.com/blockly/xml"></xml>';
-var workspaceBlocks = '<xml xmlns="https://developers.google.com/blockly/xml"></xml>';
+var workspaceBlocks = `<xml xmlns="https://developers.google.com/blockly/xml">
+  <block type="shape" x="12" y="13">
+  <value name="sides">
+    <block type="math_number">
+      <field name="NUM">3</field>
+    </block>
+  </value>
+  <value name="radius">
+    <block type="anon">
+      <value name="fn">
+        <block type="text">
+          <field name="TEXT">a.fft[0]</field>
+        </block>
+      </value>
+    </block>
+  </value>
+  <value name="smoothing">
+    <block type="math_number">
+      <field name="NUM">0</field>
+    </block>
+  </value>
+  <next>
+    <block type="out">
+      <field name="buffer">o0</field>
+    </block>
+  </next>
+  </block>
+</xml>`;
 var parser = new DOMParser();
 toolbox = parser.parseFromString(toolbox, "application/xml");
 toolbox = toolbox.firstElementChild;

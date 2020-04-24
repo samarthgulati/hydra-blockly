@@ -70,6 +70,10 @@ body.liveCoding {
               -1px -1px 1px black; 
 }
 
+.blocklyContextMenu * {
+  text-shadow: none !important;
+}
+
 
 body.liveCoding .blocklyText {
   text-shadow: none;

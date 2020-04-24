@@ -18,7 +18,7 @@ function addSpecialBlock(fn) {
     }
     case 'text': {
       var blockXML = `<block type="text">
-        <field name="TEXT">a.fft[0]</field>
+        <field name="TEXT">mouse.x * (1 + Math.cos(time))</field>
       </block>`;
       blockXML = parser.parseFromString(blockXML, "application/xml");
       categoryNode.appendChild(blockXML.firstElementChild);
