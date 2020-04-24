@@ -160,7 +160,7 @@ function addSpecialBlock(fn) {
       Blockly.JavaScript['webcam'] = function(block) {
         if(block.getNextBlock() === null && block.getPreviousBlock() === null) return '';
         var dropdown_buffer = block.getFieldValue('buffer');
-        window.webcamSrc = dropdown_buffer
+        window._blocklyHydra.webcamSrc = dropdown_buffer
         return `src(s3)`
       };
       var blockXML = `<block type="webcam">
@@ -192,7 +192,7 @@ function addSpecialBlock(fn) {
       Blockly.JavaScript['image'] = function(block) {
         if(block.getNextBlock() === null && block.getPreviousBlock() === null) return '';
         var text_src = block.getFieldValue('src');
-        window.imageSrc = text_src
+        window._blocklyHydra.imageSrc = text_src
         return `src(s1)`
       };
       var blockXML = `<block type="image">
@@ -223,11 +223,108 @@ function addSpecialBlock(fn) {
       Blockly.JavaScript['video'] = function(block) {
         if(block.getNextBlock() === null && block.getPreviousBlock() === null) return '';
         var text_src = block.getFieldValue('src');
-        window.videoSrc = text_src
+        window._blocklyHydra.videoSrc = text_src
         return `src(s2)`
       };
       var blockXML = `<block type="video">
         <field name="src">http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4</field>
+      </block>`;
+      blockXML = parser.parseFromString(blockXML, "application/xml");
+      categoryNode.appendChild(blockXML.firstElementChild);
+      break;
+    }
+    case 'audioConfig': {
+      Blockly.defineBlocksWithJsonArray([{
+        "type": "audioConfig",
+        "message0": "audioConfig = { %1 showBins: %2 , %3 setBins: %4 , %5 setCutoff: %6 , %7 setScale: %8 , %9 setSmooth: %10 %11 }",
+        "args0": [
+          {
+            "type": "input_dummy"
+          },
+          {
+            "type": "field_dropdown",
+            "name": "showBins",
+            "options": [
+              [
+                "true",
+                "true"
+              ],
+              [
+                "false",
+                "false"
+              ]
+            ]
+          },
+          {
+            "type": "input_dummy"
+          },
+          {
+            "type": "field_number",
+            "name": "setBins",
+            "value": 6,
+            "min": 0
+          },
+          {
+            "type": "input_dummy"
+          },
+          {
+            "type": "field_number",
+            "name": "setCutoff",
+            "value": 1,
+            "min": 0,
+            "precision": 0.01
+          },
+          {
+            "type": "input_dummy"
+          },
+          {
+            "type": "field_number",
+            "name": "setScale",
+            "value": 10,
+            "precision": 0.01
+          },
+          {
+            "type": "input_dummy"
+          },
+          {
+            "type": "field_number",
+            "name": "setSmooth",
+            "value": 0.96,
+            "min": 0,
+            "max": 1,
+            "precision": 0.001
+          },
+          {
+            "type": "input_dummy"
+          }
+        ],
+        "inputsInline": false,
+        "colour": 315,
+        "tooltip": "",
+        "helpUrl": ""
+      }]);
+      Blockly.JavaScript['audioConfig'] = function(block) {
+        var showBins = block.getFieldValue('showBins');
+        var setBins = block.getFieldValue('setBins');
+        var setCutoff = block.getFieldValue('setCutoff');
+        var setScale = block.getFieldValue('setScale');
+        var setSmooth = block.getFieldValue('setSmooth');
+        window._blocklyHydra.audioConfig = {
+          showBins: showBins,
+          setBins: setBins,
+          setCutoff: setCutoff,
+          setScale: setScale,
+          setSmooth: setSmooth
+        };
+        window._blocklyHydra.addAudioConfig = true;
+        return '';
+      };
+      var blockXML = `<block type="audioConfig">
+        <field name="showBins">true</field>
+        <field name="setBins">6</field>
+        <field name="setCutoff">1</field>
+        <field name="setScale">10</field>
+        <field name="setSmooth">0.96</field>
       </block>`;
       blockXML = parser.parseFromString(blockXML, "application/xml");
       categoryNode.appendChild(blockXML.firstElementChild);

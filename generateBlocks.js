@@ -36,9 +36,19 @@ toolbox = toolbox.firstElementChild;
 workspaceBlocks = parser.parseFromString(workspaceBlocks, "application/xml");
 workspaceBlocks = workspaceBlocks.firstElementChild;
 
-window.webcamSrc = null;
-window.videoSrc = null;
-window.imageSrc = null;
+window._blocklyHydra = {
+  webcamSrc: null,
+  videoSrc: null,
+  imageSrc: null,
+  addAudioConfig: false,
+  audioConfig: {
+    showBins: false,
+    setBins: 6,
+    setCutoff: 1,
+    setScale: 10,
+    setSmooth: 0.96
+  }
+}
 
 function code(block, args, dot) {
   return `${dot ? '' : '.'}${block.type}(${args.join(',')})`
@@ -68,6 +78,9 @@ var specialFns = [{
   type: 'parameter'
 }, {
   name: 'text',
+  type: 'parameter'
+}, {
+  name: 'audioConfig',
   type: 'parameter'
 }];
 

@@ -16,7 +16,7 @@ var options = {
 	css : true, 
 	media : 'https://blockly-demo.appspot.com/static/media/', 
 	rtl : false, 
-	scrollbars : false, 
+	scrollbars : true, 
 	sounds : true, 
 	oneBasedIndex : true
 };
@@ -27,26 +27,41 @@ var workspace = Blockly.inject(blocklyDiv, options);
 Blockly.Xml.domToWorkspace(workspaceBlocks, workspace);
 
 function updateCanvas(e) {
+	// would fail if user adds more than one audioConfig
+	if(e.type
+		 && e.type === Blockly.Events.BLOCK_DELETE
+		 && e.oldXml.getAttribute('type') === 'audioConfig') {
+		window._blocklyHydra.addAudioConfig = false;
+	}
 	// Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
 	window.LoopTrap = 1000;
 	Blockly.JavaScript.INFINITE_LOOP_TRAP =
 		'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
 	var code = Blockly.JavaScript.workspaceToCode(workspace);
-	if(window.webcamSrc !== null) {
-		code = 's3.initCam(window.webcamSrc);\n' + code
+	if(window._blocklyHydra.addAudioConfig) {
+		code = Object.keys(window._blocklyHydra.audioConfig).map(key => {
+			if(key === 'showBins') {
+				if(window._blocklyHydra.audioConfig[key]) return `a.show();`;
+				return `a.hide();`;
+			} 
+			return `a.${key}(${window._blocklyHydra.audioConfig[key]});`
+		}).join('') + '\n' + code;
 	}
-	if(window.videoSrc !== null) {
+	if(window._blocklyHydra.webcamSrc !== null) {
+		code = 's3.initCam(window._blocklyHydra.webcamSrc);\n' + code;
+	}
+	if(window._blocklyHydra.videoSrc !== null) {
 		code = `var vid = document.createElement('video');
 vid.crossOrigin = 'anonymous';
 vid.autoplay = true;
 vid.loop = true;
-vid.src = window.videoSrc;
+vid.src = window._blocklyHydra.videoSrc;
 s2.init({src: vid});\n` + code
 	}
-	if(window.imageSrc !== null) {
+	if(window._blocklyHydra.imageSrc !== null) {
 		code = `var imgEl = document.createElement('img');
 imgEl.crossOrigin = 'anonymous';
-imgEl.src = window.imageSrc;
+imgEl.src = window._blocklyHydra.imageSrc;
 s1.init({src: imgEl});\n` + code
 	}
 	consoleEl.textContent = code;
@@ -89,7 +104,6 @@ function copyCodeToClipboard() {
 
   document.body.removeChild(textArea);
 }
-
 
 runBtn.addEventListener('click', updateCanvas);
 copyCode.addEventListener('click', copyCodeToClipboard);
