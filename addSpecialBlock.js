@@ -121,7 +121,7 @@ function addSpecialBlock(fn) {
         var args = [
           block.getFieldValue('buffer'),
         ]
-        return code(block, args);
+        return code(block, args) + ';';
       };
       var blockXML = `<block type="out">
         <field name="buffer">o0</field>

@@ -40,7 +40,7 @@ var workspaceBlocks = `<xml xmlns="https://developers.google.com/blockly/xml">
     <block type="anon">
       <value name="fn">
         <block type="text">
-          <field name="TEXT">a.fft[0]</field>
+          <field name="TEXT">a.fft[0] + 0.2</field>
         </block>
       </value>
     </block>
@@ -132,6 +132,11 @@ hydraFns.forEach(fn => {
               type: 'input_statement',
               name: ip.name
             }
+          } else if (ip.type === 'sampler2D') {
+            return {
+              type: 'input_value',
+              name: ip.name
+            }
           } else {
             return {
               type: 'input_value',
@@ -153,18 +158,34 @@ hydraFns.forEach(fn => {
     var args = fn.inputs.map(ip => {
       if(ip.type === 'vec4') {
         return Blockly.JavaScript.statementToCode(block, ip.name);
+      } else if (ip.type === 'sampler2D') {
+        var value_tex = Blockly.JavaScript.valueToCode(block, ip.name, Blockly.JavaScript.ORDER_ATOMIC);
+        value_tex = value_tex.substring(1, value_tex.length - 1);
+        return value_tex;
       } else {
-        return Blockly.JavaScript.valueToCode(block, ip.name, Blockly.JavaScript.ORDER_ATOMIC)
+        return Blockly.JavaScript.valueToCode(block, ip.name, Blockly.JavaScript.ORDER_ATOMIC);
       }
     });
 		return code(block, args, fn.type === 'src');
   };
   var blockXML = `<block type="${fn.name}">
-    ${fn.inputs.map(ip => ip.type === 'vec4' ? '' : `<value name="${ip.name}">
-      <block type="math_number">
-        <field name="NUM">${ip.default}</field>
-      </block>
-    </value>`).join('\n')}
+    ${fn.inputs.map(ip => {
+      if(ip.type === 'vec4') return '';
+      else if (ip.type === 'sampler2D') {
+        return `<value name="${ip.name}">
+          <block type="text">
+            <field name="TEXT">o1</field>
+          </block>
+        </value>`
+      }
+      else { 
+        return `<value name="${ip.name}">
+          <block type="math_number">
+            <field name="NUM">${ip.default}</field>
+          </block>
+        </value>`
+      }
+    }).join('\n')}
   </block>`;
   blockXML = parser.parseFromString(blockXML, "application/xml");
   var categoryNode = toolbox.querySelector(`category[name="${hydraFnTypesToBlocklyCategories[fn.type].category}"]`);

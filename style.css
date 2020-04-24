@@ -37,63 +37,65 @@ details {
   top: 0;
 }
 
-body.liveCoding svg.blocklySvg text {
+body.maxCanvas svg.blocklySvg text {
   fill: white !important;
 }
 
-body.liveCoding svg.blocklySvg {
+body.maxCanvas svg.blocklySvg {
   background: rgba(0,0,0,0) !important;
 }
 
-body.liveCoding .blocklyMainBackground {
+body.maxCanvas .blocklyMainBackground {
   stroke: none;
 }
 
-body.liveCoding .blocklyFlyout path,
-body.liveCoding svg.blocklySvg path,
-body.liveCoding svg.blocklySvg .blocklyFieldRect {
+body.maxCanvas .blocklyFlyout path,
+body.maxCanvas svg.blocklySvg path,
+body.maxCanvas svg.blocklySvg .blocklyFieldRect {
   fill: rgba(0,0,0,0.25) !important;
 }
 
-body.liveCoding .geras-renderer.classic-theme .blocklySelected>.blocklyPath {
+body.maxCanvas .geras-renderer.classic-theme .blocklySelected>.blocklyPath {
   stroke-width: 1px;
 }
 
-body.liveCoding .blocklyFlyout path {
+body.maxCanvas .blocklyFlyout path {
   fill: rgba(0,0,0,0.5) !important;
 }
 
-body.liveCoding {
+body.maxCanvas {
   text-shadow: 1px  1px 1px black,
               -1px  1px 1px black,
                1px -1px 1px black,
               -1px -1px 1px black; 
 }
 
-.blocklyContextMenu * {
+.blocklyContextMenu *,
+.blocklyTooltipDiv,
+.blocklyDropDownDiv {
   text-shadow: none !important;
 }
 
 
-body.liveCoding .blocklyText {
+body.maxCanvas .blocklyText {
   text-shadow: none;
 }
 
 
-body.liveCoding .blocklyToolboxDiv {
+body.maxCanvas .blocklyToolboxDiv {
   background: rgba(0,0,0,0) !important;
 }
 
-body.liveCoding {
+body.maxCanvas {
   background: black;
   color: white !important;
 }
 
-body.liveCoding #blocklyDiv {
+body.maxCanvas #blocklyDiv {
   width: 100% !important;
 }
 
-body.liveCoding #hydraCanvas {
+body.maxCanvas #hydraCanvas {
   position: fixed;
   left: 0;
   top: 0;
@@ -102,10 +104,10 @@ body.liveCoding #hydraCanvas {
   z-index: -1;
 }
 
-body.liveCoding details {
+body.maxCanvas details {
   width: 100%;
 }
 
-body.liveCoding #hydraCanvas.moveToTop {
+body.maxCanvas #hydraCanvas.moveToTop {
   z-index: 100;
 }

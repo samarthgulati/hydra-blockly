@@ -1,5 +1,5 @@
 var liveUpdate = document.getElementById("liveUpdate");
-var liveCoding = document.getElementById("liveCoding");
+var maxCanvas = document.getElementById("maxCanvas");
 var consoleEl = document.getElementById("consoleEl");
 var runBtn = document.getElementById("runBtn");
 var copyCode = document.getElementById("copyCode");
@@ -41,7 +41,7 @@ function updateCanvas(e) {
 	if(window._blocklyHydra.addAudioConfig) {
 		code = Object.keys(window._blocklyHydra.audioConfig).map(key => {
 			if(key === 'showBins') {
-				if(window._blocklyHydra.audioConfig[key]) return `a.show();`;
+				if(window._blocklyHydra.audioConfig[key] === 'true') return `a.show();`;
 				return `a.hide();`;
 			} 
 			return `a.${key}(${window._blocklyHydra.audioConfig[key]});`
@@ -107,11 +107,11 @@ function copyCodeToClipboard() {
 
 runBtn.addEventListener('click', updateCanvas);
 copyCode.addEventListener('click', copyCodeToClipboard);
-liveCoding.addEventListener('change', function() {
-	if(liveCoding.checked) {
-		document.body.classList.add('liveCoding');
+maxCanvas.addEventListener('change', function() {
+	if(maxCanvas.checked) {
+		document.body.classList.add('maxCanvas');
 	} else {
-		document.body.classList.remove('liveCoding');
+		document.body.classList.remove('maxCanvas');
 	}
 });
 liveUpdate.addEventListener('change', function() {
