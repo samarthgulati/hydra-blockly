@@ -17,11 +17,14 @@ function addSpecialBlock(fn) {
       break;
     }
     case 'text': {
-      var blockXML = `<block type="text">
-        <field name="TEXT">mouse.x * (1 + Math.cos(time))</field>
-      </block>`;
-      blockXML = parser.parseFromString(blockXML, "application/xml");
-      categoryNode.appendChild(blockXML.firstElementChild);
+      var globalVariableStarterValues = ['mouse.x', '0.3 * (1 + Math.sin(time))'];
+      globalVariableStarterValues.forEach(function (val) {
+        var blockXML = `<block type="text">
+          <field name="TEXT">${val}</field>
+        </block>`;
+        blockXML = parser.parseFromString(blockXML, "application/xml");
+        categoryNode.appendChild(blockXML.firstElementChild);
+      });
       break;
     }
     case 'array': {
