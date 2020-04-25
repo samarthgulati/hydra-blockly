@@ -8,7 +8,7 @@
 <body>
   <canvas width="491px" height="540px" id="hydraCanvas"></canvas>
 	<script src="image-editing-glsl-functions.js"></script>
-  <script src="hydra.js"></script>
+  <script src="hydra-synth.js"></script>
   <script>
     var hydra = new Hydra({
       canvas: hydraCanvas
@@ -21,8 +21,11 @@
     })
     css_filter_glsl_fns.forEach(function(fn) {
 			hydra.synth.setFunction(fn)
-		})
-		osc().layer(gradient().opacity(0.5)).out()
+    })
+    css_gradients_glsl_fns.forEach(function(fn) {
+			hydra.synth.setFunction(fn)
+    })
+    linearGradient().out()
   </script>
 </body>
 </html>

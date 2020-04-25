@@ -14,3 +14,6 @@ levels_glsl_fns.forEach(function(fn) {
 css_filter_glsl_fns.forEach(function(fn) {
   hydra.synth.setFunction(fn)
 });
+css_gradients_glsl_fns.forEach(function(fn) {
+  hydra.synth.setFunction(fn)
+});

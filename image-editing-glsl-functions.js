@@ -574,3 +574,193 @@ var css_filter_glsl_fns = [
     `
   }
 ];
+
+var css_gradients_glsl_fns = [
+  {
+    name: "linearGradient",
+    type: 'src',
+    inputs: [
+      {
+        type: "float",
+        name: "r1",
+        default: 1.0
+      },{
+        type: "float",
+        name: "g1",
+        default: 0.99
+      },{
+        type: "float",
+        name: "b1",
+        default: 0.67
+      },{
+        type: "float",
+        name: "x1",
+        default: -0.5
+      },{
+        type: "float",
+        name: "y1",
+        default: -0.5
+      },{
+        type: "float",
+        name: "r2",
+        default: 0.91
+      },{
+        type: "float",
+        name: "g2",
+        default: 0.06
+      },{
+        type: "float",
+        name: "b2",
+        default: 0.47
+      },{
+        type: "float",
+        name: "x2",
+        default: 0.5
+      },{
+        type: "float",
+        name: "y2",
+        default: 0.5
+      },
+    ],
+    // https://www.shadertoy.com/view/lscGDr
+    glsl: `   vec2 st = _st * 2. - 1.;
+    vec3 color1 = pow(vec3(r1, g1, b1), vec3(2.2));
+    vec3 color2 = pow(vec3(r2, g2, b2), vec3(2.2));
+    vec2 a = vec2(x1, y1); // First gradient point.
+    vec2 b = vec2(x2, y2); // Second gradient point.
+
+    // Calculate interpolation factor with vector projection.
+    vec2 ba = b - a;
+    float t = dot(st - a, ba) / dot(ba, ba);
+    // Saturate and apply smoothstep to the factor.
+    t = smoothstep(0.0, 1.0, clamp(t, 0.0, 1.0));
+    // Interpolate.
+    vec3 color = mix(color1, color2, t);
+    // Convert color from linear to sRGB color space (=gamma encode).
+    color = pow((color), vec3(1.0 / 2.2));
+    // Add gradient noise to reduce banding.
+    // vec3 magic = vec3(0.06711056, 0.00583715, 52.9829189);
+    // float dither = 1.0;
+    // color += (dither/255.0) * fract(magic.z * fract(dot(st, magic.xy))) - (dither*0.5/255.0);
+    return vec4(color, 1.0);`
+  },{
+    name: "radialGradient",
+    type: 'src',
+    inputs: [
+      {
+        type: "float",
+        name: "r1",
+        default: 0.63
+      },{
+        type: "float",
+        name: "g1",
+        default: 0.88
+      },{
+        type: "float",
+        name: "b1",
+        default: 0.34
+      },{
+        type: "float",
+        name: "x1",
+        default: 0
+      },{
+        type: "float",
+        name: "y1",
+        default: 0
+      },{
+        type: "float",
+        name: "r2",
+        default: 0.64
+      },{
+        type: "float",
+        name: "g2",
+        default: 0.98
+      },{
+        type: "float",
+        name: "b2",
+        default: 0.95
+      },{
+        type: "float",
+        name: "x2",
+        default: 0.5
+      },{
+        type: "float",
+        name: "y2",
+        default: 0.5
+      },
+    ],
+    // https://www.shadertoy.com/view/ldtSzM
+    glsl: `   vec2 st = _st * 2. - 1.; 
+    vec3 color1 = pow(vec3(r1, g1, b1), vec3(2.2));
+    vec3 color2 = pow(vec3(r2, g2, b2), vec3(2.2));
+    vec2 a = vec2(x1, y1); // First gradient point.
+    vec2 b = vec2(x2, y2); // Second gradient point.
+    // radius
+    float r = distance(a, b);
+    float d = distance(b - st.xy, b - a);
+    vec3 color = mix(color1, color2, min(d, 1.));
+
+    // Convert color from linear to sRGB color space (=gamma encode).
+    color = pow((color), vec3(1.0 / 2.2));
+    // Add gradient noise to reduce banding.
+    // vec3 magic = vec3(0.06711056, 0.00583715, 52.9829189);
+    // float dither = 2.0;
+    // color += (dither/255.0) * fract(magic.z * fract(dot(st, magic.xy))) - (dither*0.5/255.0);
+    return vec4(color, 1.0);`
+  },{
+    name: "conicGradient",
+    type: 'src',
+    inputs: [
+      {
+        type: "float",
+        name: "r1",
+        default: 0.91
+      },{
+        type: "float",
+        name: "g1",
+        default: 0.25
+      },{
+        type: "float",
+        name: "b1",
+        default: 0.28
+      },{
+        type: "float",
+        name: "cx",
+        default: 0
+      },{
+        type: "float",
+        name: "cy",
+        default: 0
+      },{
+        type: "float",
+        name: "r2",
+        default: 0.14
+      },{
+        type: "float",
+        name: "g2",
+        default: 0.15
+      },{
+        type: "float",
+        name: "b2",
+        default: 0.27
+      }
+    ],
+    // https://www.shadertoy.com/view/ldtSzM
+    glsl: `   vec3 color1 = pow(vec3(r1, g1, b1), vec3(2.2));
+    vec3 color2 = pow(vec3(r2, g2, b2), vec3(2.2));
+    vec2 c = vec2(cx, cy) + vec2(0.5, 0.5); // center
+    float pi = 3.14159;
+    // range of atan -pi/2 to pi/2 => bringing it to 0-1
+    float heading = 0.5 * (atan(_st.y - c.y, _st.x - c.x) / pi) + 0.5;
+    vec3 color = mix(color1, color2, smoothstep(0., 0.5, heading));
+    color = mix(color, color1, smoothstep(0.5, 1., heading));
+
+    // Convert color from linear to sRGB color space (=gamma encode).
+    color = pow((color), vec3(1.0 / 2.2));
+    // Add gradient noise to reduce banding.
+    // vec3 magic = vec3(0.06711056, 0.00583715, 52.9829189);
+    // float dither = 2.0;
+    // color += (dither/255.0) * fract(magic.z * fract(dot(_st, magic.xy))) - (dither*0.5/255.0);
+    return vec4(color, 1.0);`
+  }
+]
