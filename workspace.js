@@ -4,23 +4,23 @@ var consoleEl = document.getElementById("consoleEl");
 var runBtn = document.getElementById("runBtn");
 var copyCode = document.getElementById("copyCode");
 
-var options = { 
-	toolbox : toolbox, 
-	collapse : false, 
-	comments : false, 
-	disable : false, 
-	maxBlocks : Infinity, 
-	trashcan : false, 
-	horizontalLayout : false, 
-	toolboxPosition : 'start', 
-	css : true, 
-	media : 'https://blockly-demo.appspot.com/static/media/', 
-	rtl : false, 
-	scrollbars : true, 
-	sounds : true, 
+var options = {
+	toolbox : toolbox,
+	collapse : false,
+	comments : false,
+	disable : false,
+	maxBlocks : Infinity,
+	trashcan : false,
+	horizontalLayout : false,
+	toolboxPosition : 'start',
+	css : true,
+	media : 'https://blockly-demo.appspot.com/static/media/',
+	rtl : false,
+	scrollbars : true,
+	sounds : true,
 	oneBasedIndex : true
 };
- 
+
 var workspace = Blockly.inject(blocklyDiv, options);
 
 /* Load blocks to workspace. */
@@ -43,7 +43,7 @@ function updateCanvas(e) {
 			if(key === 'showBins') {
 				if(window._blocklyHydra.audioConfig[key] === 'true') return `a.show();`;
 				return `a.hide();`;
-			} 
+			}
 			return `a.${key}(${window._blocklyHydra.audioConfig[key]});`
 		}).join('') + '\n' + code;
 	}
@@ -78,7 +78,7 @@ s1.init({src: imgEl});\n` + code
 function copyCodeToClipboard() {
   var textArea = document.createElement("textarea");
   textArea.value = consoleEl.textContent;
-  
+
   // Avoid scrolling to bottom
   textArea.style.top = "0";
   textArea.style.left = "0";
@@ -96,7 +96,7 @@ function copyCodeToClipboard() {
 			setTimeout(function() {
 				copyCode.textContent = 'Copy Code'
 				copyCode.removeAttribute('disabled')
-			}, 500) 
+			}, 500)
 		}
   } catch (err) {
     console.error('Fallback: Oops, unable to copy', err);
@@ -105,8 +105,17 @@ function copyCodeToClipboard() {
   document.body.removeChild(textArea);
 }
 
+/**
+ * ------------------------------------------------
+ * Interactions
+ * ------------------------------------------------
+ */
+
+// Buttons
 runBtn.addEventListener('click', updateCanvas);
 copyCode.addEventListener('click', copyCodeToClipboard);
+
+// Maximize canvas toggle for Hydra
 maxCanvas.addEventListener('change', function() {
 	if(maxCanvas.checked) {
 		document.body.classList.add('maxCanvas');
@@ -114,14 +123,55 @@ maxCanvas.addEventListener('change', function() {
 		document.body.classList.remove('maxCanvas');
 	}
 });
+
+// Live toggle functionality
 liveUpdate.addEventListener('change', function() {
 	if(liveUpdate.checked) {
 		runBtn.setAttribute('disabled', true);
+		workspace.addChangeListener(updateCanvas);
 	} else {
 		runBtn.removeAttribute('disabled');
+		workspace.removeChangeListener(updateCanvas);
 	}
 });
 workspace.addChangeListener(updateCanvas);
+
+// Double cick to hide UI
 hydraCanvas.addEventListener('dblclick', function(e) {
 	hydraCanvas.classList.toggle('moveToTop');
 });
+
+// Using ARROW KEYS to change values dynamically
+var _KEYS = { min: 37, max: 40 };
+document.body.addEventListener('keydown',function(e){
+	if (e.which >= _KEYS.min && e.which <= _KEYS.max){
+		var blocklyInput = document.getElementsByClassName("blocklyHtmlInput")[0];
+		var in_val = blocklyInput.value;
+		//
+		if(!blocklyInput.hasAttribute('type') && !isNaN(in_val)){
+			//
+			var current_val = parseFloat(in_val);
+			console.log('Init input value : ' + current_val);
+			//
+			blocklyInput.setAttribute('type', 'range');
+			//
+			if(current_val == 0)	current_val = 0.1;
+			if(!Number.isInteger(current_val))
+				blocklyInput.setAttribute('step', '0.1');
+			else
+				blocklyInput.setAttribute('step', '1');
+		}
+	}
+});
+
+/**
+ * ------------------------------------------------
+ * Helper functions
+ * ------------------------------------------------
+ */
+//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isInteger#Polyfill
+Number.isInteger = Number.isInteger || function(value) {
+  return typeof value === 'number' &&
+    isFinite(value) &&
+    Math.floor(value) === value;
+};
