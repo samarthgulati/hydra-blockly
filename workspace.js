@@ -145,7 +145,7 @@ hydraCanvas.addEventListener('dblclick', function(e) {
 var _KEYS = { min: 37, max: 40 };
 document.body.addEventListener('keydown',function(e){
 	if (e.which >= _KEYS.min && e.which <= _KEYS.max){
-		var blocklyInput = document.getElementsByClassName("blocklyHtmlInput")[0];
+		var blocklyInput = document.querySelector(".blocklyHtmlInput");
 		var in_val = blocklyInput.value;
 		//
 		if(!blocklyInput.hasAttribute('type') && !isNaN(in_val)){
