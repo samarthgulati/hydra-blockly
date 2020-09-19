@@ -83,6 +83,9 @@ function code(block, args, dot) {
 
 var unsupportedFns = ['r', 'g', 'b', 'a', 'prev', 'sum'];
 var specialFns = [{
+  name: 'blendMode',
+  type: 'combine'
+},{
   name: 'webcam',
   type: 'src'
 },{
@@ -115,6 +118,7 @@ var hydraFns = Object.values(hydra.generator.glslTransforms);
 
 hydraFns.forEach(fn => {
   if(unsupportedFns.indexOf(fn.name) > -1) return;
+  if(blendmodes_glsl_fns.findIndex(function(bf){return fn.name === bf.name}) > -1) return;
   fn.inputs.forEach(ip => {
     if(ip.type === 'vec4') {
       ip.name = 'texture';

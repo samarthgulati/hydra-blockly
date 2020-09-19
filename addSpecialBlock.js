@@ -7,6 +7,47 @@ function addSpecialBlock(fn) {
     toolbox.appendChild(categoryNode);
   }
   switch(fn.name) {
+    case 'blendMode': {
+      Blockly.defineBlocksWithJsonArray([{
+        "type": "blendMode",
+        "message0": ". %1 ( %2 texture: %3 )",
+        "args0": [
+          {
+            "type": "field_dropdown",
+            "name": "blendMode",
+            "options": blendmodes_glsl_fns.map(function (fn) {
+              return [
+                fn.name,
+                fn.name
+              ]
+            })
+          },
+          {
+            "type": "input_dummy"
+          },
+          {
+            "type": "input_statement",
+            "name": "texture"
+          }
+        ],
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": hydraFnTypesToBlocklyCategories[fn.type].index * hueMultiplier,
+        "tooltip": "",
+        "helpUrl": ""
+      }]);
+      // webcam mapped to s3
+      Blockly.JavaScript['blendMode'] = function(block) {
+        if(block.getNextBlock() === null && block.getPreviousBlock() === null) return '';
+        var dropdown_blendMode = block.getFieldValue('blendMode');
+        var textureCode = Blockly.JavaScript.statementToCode(block, 'texture');
+        return `.${dropdown_blendMode}(${textureCode})`
+      };
+      var blockXML = `<block type="blendMode"></block>`;
+      blockXML = parser.parseFromString(blockXML, "application/xml");
+      categoryNode.appendChild(blockXML.firstElementChild);
+      break;
+    }
     // adding block to scope variables created
     case 'number': {
       var blockXML = `<block type="math_number">
