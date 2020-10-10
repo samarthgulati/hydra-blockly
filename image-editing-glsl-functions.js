@@ -914,6 +914,38 @@ var book_of_shaders_fns = [{
   }
   color += value + contrast;
   return vec4(color, 1.0);`
+},{
+  // https://www.shadertoy.com/view/MdsGDN
+  name: "fbmMod",
+  type: 'src',
+  inputs: [{
+    type: 'float',
+    name: 'scale',
+    default: 2,
+  }, {
+    type: 'float',
+    name: 'offset',
+    default: 0.3,
+  }, {
+    type: 'float',
+    name: 'contrast',
+    default: 0.1,
+  }],
+  glsl: `
+  vec3 color = vec3(.0);
+  _st *= scale;
+  float value = 0.0;
+  float amplitude = .5;
+  // Loop of octaves
+  for (int i = 0; i < 3; i++) {
+      value += amplitude * _noise(offset + vec3(_st.xy, 0.0));
+      _st *= 2.;
+      amplitude *= .5;
+  }
+  color += value;
+  color = abs(cos(_st.x*0.1 + color*20.0));
+  color += contrast;
+  return vec4(color, 1.0);`
 }, {
   name: "fluid",
   type: 'src',
@@ -1066,3 +1098,83 @@ var book_of_shaders_fns = [{
   
   return vec4(col, 1.0);`
 }]
+
+var distort_fns = [{
+  name: 'radialSym',
+  type: 'coord',
+  inputs: [
+    {
+      type: 'float',
+      name: 'nSides',
+      default: 4,
+    }
+  ],
+  glsl:
+`   vec2 st = _st;
+   st -= 0.5;
+   float r = 0.5 * length(st);
+   float a = atan(st.y, st.x);
+   float pi = 2.*3.1416;
+   a = mod(a,pi/nSides);
+   return r * vec2(cos(a), sin(a));`
+},
+// https://www.shadertoy.com/view/4sSSzz
+{
+  name: 'fishEye',
+  type: 'coord',
+  inputs: [
+    {
+      type: 'float',
+      name: 'strength',
+      default: 1,
+    }
+  ],
+  glsl:
+`   vec2 st = _st;   
+    st -= 0.5;
+    float r = sqrt(dot(st, st)); // distance of pixel from center
+    float power = 3.141592 * strength;
+
+    float bind = 1.0;
+    
+
+    //Weird formulas
+    vec2 uv;
+    if (power > 0.0)//fisheye
+      uv = normalize(st) * tan(r * power) / tan(power);
+    else if (power < 0.0)//antifisheye
+      uv = normalize(st) * atan(r * -power * 10.0) / atan(-power * 10.0);
+    else uv = st;//no effect for power = 1.0
+
+   return uv;`
+},{
+  // https://www.shadertoy.com/view/lstfzl
+  name: 'radialDistort',
+  type: 'coord',
+  inputs: [
+    {
+      type: 'float',
+      name: 'freq',
+      default: 1,
+    },
+    {
+      type: 'float',
+      name: 'speed',
+      default: 0,
+    },
+    {
+      type: 'float',
+      name: 'power',
+      default: 1,
+    }
+  ],
+  glsl:
+`   vec2 st = _st;   
+    st -= 0.5;
+    float theta  = atan(st.y, st.x);
+    float radius = length(st);
+    radius = pow(radius, power*sin(radius*freq-speed*time)+1.0);
+    st.x = radius * cos(theta);
+    st.y = radius * sin(theta);
+    return 0.5 * (st + 1.0);`
+},]

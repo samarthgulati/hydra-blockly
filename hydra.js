@@ -19,6 +19,7 @@ var customFunctions = flatten([
   css_gradients_glsl_fns,
   image_filter_fns,
   book_of_shaders_fns,
+  distort_fns,
 ]);
 
 var customFunctionNames = [];
