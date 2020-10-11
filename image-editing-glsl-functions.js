@@ -582,16 +582,16 @@ var css_gradients_glsl_fns = [
     inputs: [
       {
         type: "float",
-        name: "r1",
-        default: 1.0
+        name: "h1",
+        default: 0.01
       },{
         type: "float",
-        name: "g1",
-        default: 0.99
+        name: "s1",
+        default: 0.82
       },{
         type: "float",
-        name: "b1",
-        default: 0.67
+        name: "v1",
+        default: 0.96
       },{
         type: "float",
         name: "x1",
@@ -602,16 +602,16 @@ var css_gradients_glsl_fns = [
         default: -0.5
       },{
         type: "float",
-        name: "r2",
-        default: 0.91
+        name: "h2",
+        default: 0.69
       },{
         type: "float",
-        name: "g2",
-        default: 0.06
+        name: "s2",
+        default: 1
       },{
         type: "float",
-        name: "b2",
-        default: 0.47
+        name: "v2",
+        default: 0.43
       },{
         type: "float",
         name: "x2",
@@ -624,8 +624,8 @@ var css_gradients_glsl_fns = [
     ],
     // https://www.shadertoy.com/view/lscGDr
     glsl: `   vec2 st = _st * 2. - 1.;
-    vec3 color1 = pow(vec3(r1, g1, b1), vec3(2.2));
-    vec3 color2 = pow(vec3(r2, g2, b2), vec3(2.2));
+    vec3 color1 = pow(_hsvToRgb(vec3(h1, s1, v1)), vec3(2.2));
+    vec3 color2 = pow(_hsvToRgb(vec3(h2, s2, v2)), vec3(2.2));
     vec2 a = vec2(x1, y1); // First gradient point.
     vec2 b = vec2(x2, y2); // Second gradient point.
 
@@ -649,16 +649,16 @@ var css_gradients_glsl_fns = [
     inputs: [
       {
         type: "float",
-        name: "r1",
-        default: 0.63
+        name: "h1",
+        default: 0.42
       },{
         type: "float",
-        name: "g1",
-        default: 0.88
+        name: "s1",
+        default: 0.95
       },{
         type: "float",
-        name: "b1",
-        default: 0.34
+        name: "v1",
+        default: 0.71
       },{
         type: "float",
         name: "x1",
@@ -669,16 +669,16 @@ var css_gradients_glsl_fns = [
         default: 0
       },{
         type: "float",
-        name: "r2",
-        default: 0.64
+        name: "h2",
+        default: 0.58
       },{
         type: "float",
-        name: "g2",
-        default: 0.98
+        name: "s2",
+        default: 0.89
       },{
         type: "float",
-        name: "b2",
-        default: 0.95
+        name: "v2",
+        default: 0.38
       },{
         type: "float",
         name: "x2",
@@ -691,8 +691,8 @@ var css_gradients_glsl_fns = [
     ],
     // https://www.shadertoy.com/view/ldtSzM
     glsl: `   vec2 st = _st * 2. - 1.; 
-    vec3 color1 = pow(vec3(r1, g1, b1), vec3(2.2));
-    vec3 color2 = pow(vec3(r2, g2, b2), vec3(2.2));
+    vec3 color1 = pow(_hsvToRgb(vec3(h1, s1, v1)), vec3(2.2));
+    vec3 color2 = pow(_hsvToRgb(vec3(h2, s2, v2)), vec3(2.2));
     vec2 a = vec2(x1, y1); // First gradient point.
     vec2 b = vec2(x2, y2); // Second gradient point.
     // radius
@@ -713,16 +713,16 @@ var css_gradients_glsl_fns = [
     inputs: [
       {
         type: "float",
-        name: "r1",
-        default: 0.91
+        name: "h1",
+        default: 0.46
       },{
         type: "float",
-        name: "g1",
-        default: 0.25
+        name: "s1",
+        default: 0.65
       },{
         type: "float",
-        name: "b1",
-        default: 0.28
+        name: "v1",
+        default: 0.78
       },{
         type: "float",
         name: "cx",
@@ -733,21 +733,22 @@ var css_gradients_glsl_fns = [
         default: 0
       },{
         type: "float",
-        name: "r2",
-        default: 0.14
+        name: "h2",
+        default: 0.78
       },{
         type: "float",
-        name: "g2",
-        default: 0.15
+        name: "s2",
+        default: 0.75
       },{
         type: "float",
-        name: "b2",
-        default: 0.27
+        name: "v2",
+        default: 0.76
       }
     ],
     // https://www.shadertoy.com/view/ldtSzM
-    glsl: `   vec3 color1 = pow(vec3(r1, g1, b1), vec3(2.2));
-    vec3 color2 = pow(vec3(r2, g2, b2), vec3(2.2));
+    glsl: `   
+    vec3 color1 = pow(_hsvToRgb(vec3(h1, s1, v1)), vec3(2.2));
+    vec3 color2 = pow(_hsvToRgb(vec3(h2, s2, v2)), vec3(2.2));
     vec2 c = vec2(cx, cy) + vec2(0.5, 0.5); // center
     float pi = 3.14159;
     // range of atan -pi/2 to pi/2 => bringing it to 0-1
@@ -1177,4 +1178,72 @@ var distort_fns = [{
     st.x = radius * cos(theta);
     st.y = radius * sin(theta);
     return 0.5 * (st + 1.0);`
-},]
+},
+{
+  name: 'mapHue',
+  type: 'color',
+inputs: [
+  {
+    type: "float",
+    name: "h1",
+    default: 0.7
+  },{
+    type: "float",
+    name: "s1",
+    default: 1
+  },{
+    type: "float",
+    name: "v1",
+    default: 1
+  },{
+    type: "float",
+    name: "h2",
+    default: 0.88
+  },{
+    type: "float",
+    name: "s2",
+    default: 0.75
+  },{
+    type: "float",
+    name: "v2",
+    default: 1
+  }
+],
+// https://www.shadertoy.com/view/lscGDr
+glsl: `   vec3 c = _rgbToHsv(_c0.rgb);
+vec3 color1 = pow(_hsvToRgb(vec3(h1, s1, v1)), vec3(2.2));
+vec3 color2 = pow(_hsvToRgb(vec3(h2, s2, v2)), vec3(2.2));
+
+vec3 color = mix(color1, color2, c.b);
+// Convert color from linear to sRGB color space (=gamma encode).
+color = pow((color), vec3(1.0 / 2.2));
+// Add gradient noise to reduce banding.
+// vec3 magic = vec3(0.06711056, 0.00583715, 52.9829189);
+// float dither = 1.0;
+// color += (dither/255.0) * fract(magic.z * fract(dot(st, magic.xy))) - (dither*0.5/255.0);
+return vec4(color, 1.0);`
+},
+{
+  name: 'modulateRadialSym',
+  type: 'combineCoord',
+  inputs: [
+    {
+      type: 'float',
+      name: 'nSides',
+      default: 4,
+    },{
+      type: 'float',
+      name: 'multiple',
+      default: 1,
+    },
+  ],
+  glsl:
+`  vec3 c = _rgbToHsv(_c0.rgb); 
+   c.b *= multiple;
+   vec2 st = _st - 0.5;
+   float r = 0.5*length(st);
+   float a = c.b + atan(st.y, st.x);
+   float pi = 2.*3.1416;
+   a = mod(a,pi/nSides);
+   return (r) * vec2(cos(a), sin(a));`
+}];
