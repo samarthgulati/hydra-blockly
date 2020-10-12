@@ -39,6 +39,12 @@ function updateCanvas(e) {
 		 && e.oldXml.getAttribute('type') === 'audioConfig') {
 		window._blocklyHydra.addAudioConfig = false;
 	}
+	// would fail if user adds more than one audioConfig
+	if(e.type
+		&& e.type === Blockly.Events.BLOCK_DELETE
+		&& e.oldXml.getAttribute('type') === 'render') {
+	 window._blocklyHydra.render = 'o0';
+ }
 	// Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
 	window.LoopTrap = 1000;
 	Blockly.JavaScript.INFINITE_LOOP_TRAP =
@@ -80,6 +86,7 @@ s1.init({src: imgEl});\n` + code;
 		});
 		code = customCode + '\n' + code;
 	}
+	code += '\n' + 'render(' + window._blocklyHydra.render + ');';
 	consoleEl.textContent = code;
   if(liveUpdate.checked || e.type === 'click') {
 		try {

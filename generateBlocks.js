@@ -64,6 +64,7 @@ workspaceBlocks = parser.parseFromString(workspaceBlocks, "application/xml");
 workspaceBlocks = workspaceBlocks.firstElementChild;
 
 window._blocklyHydra = {
+  render: 'o0',
   webcamSrc: null,
   videoSrc: null,
   imageSrc: null,
@@ -111,6 +112,9 @@ var specialFns = [{
   type: 'parameter'
 }, {
   name: 'audioConfig',
+  type: 'parameter'
+}, {
+  name: 'render',
   type: 'parameter'
 }];
 

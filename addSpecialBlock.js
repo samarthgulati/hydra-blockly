@@ -374,5 +374,52 @@ function addSpecialBlock(fn) {
       categoryNode.appendChild(blockXML.firstElementChild);
       break;
     }
+    case 'render': {
+      Blockly.defineBlocksWithJsonArray([{
+        "type": "render",
+        "message0": ".render( buffer: %1 )",
+        "args0": [
+          {
+            "type": "field_dropdown",
+            "name": "buffer",
+            "options": [
+              [
+                "output0",
+                "o0"
+              ],
+              [
+                "output1",
+                "o1"
+              ],
+              [
+                "output2",
+                "o2"
+              ],
+              [
+                "output3",
+                "o3"
+              ],
+              [
+                "all",
+                ""
+              ]
+            ]
+          }
+        ],
+        "colour": 315,
+        "tooltip": "",
+        "helpUrl": ""
+      }]);
+      Blockly.JavaScript['render'] = function(block) {
+        window._blocklyHydra.render = block.getFieldValue('buffer');
+        return '';
+      };
+      var blockXML = `<block type="render">
+        <field name="buffer">o0</field>
+      </block>`;
+      blockXML = parser.parseFromString(blockXML, "application/xml");
+      categoryNode.appendChild(blockXML.firstElementChild);
+      break;
+    }
   }
 }
