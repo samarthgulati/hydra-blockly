@@ -29,7 +29,7 @@ var hydraFnTypesToBlocklyCategories = {
 var hueDivisor = Object.keys(hydraFnTypesToBlocklyCategories).length + 1;
 var hueMultiplier = 360 / hueDivisor;
 var toolbox = '<xml xmlns="https://developers.google.com/blockly/xml"></xml>';
-var workspaceBlocks = `<xml xmlns="https://developers.google.com/blockly/xml">
+var workspaceBlocks = /* XML */`<xml xmlns="https://developers.google.com/blockly/xml">
   <block type="shape" x="12" y="13">
   <value name="sides">
     <block type="math_number">
