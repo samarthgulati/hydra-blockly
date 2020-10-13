@@ -577,6 +577,30 @@ var css_filter_glsl_fns = [
 
 var css_gradients_glsl_fns = [
   {
+    name: "hsv",
+    type: 'src',
+    inputs: [
+      {
+        type: "float",
+        name: "h",
+        default: 0.13
+      },{
+        type: "float",
+        name: "s",
+        default: 1.0
+      },{
+        type: "float",
+        name: "v",
+        default: 0.96
+      },{
+        type: "float",
+        name: "a",
+        default: 1.0
+      },
+    ],
+    glsl: `return vec4(_hsvToRgb(vec3(h, s, v)), a);`
+  },
+  {
     name: "linearGradient",
     type: 'src',
     inputs: [
