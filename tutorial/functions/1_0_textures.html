@@ -3,37 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    html,
-    body {
-      display: flex;
-      width: 900px; 
-      height: calc(450px - 1rem);
-      margin: 0;
-      padding: 0;
-      font-family: monospace;
-      overflow: hidden;
-    }
-    main {
-      display: flex;
-      flex-direction: column;
-      height: calc(450px - 1rem);
-      justify-content: space-between;
-    }
-    #blocklyDiv {
-      margin-right: 1rem;
-    }
-    #hydraCanvas {
-      width: calc(450px - 1rem);
-      height: calc(450px - 1rem);
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
   <title>Textures</title>
 </head>
 <body>
   <main>
-    <h1>Textures</h1>
-    <div id="blocklyDiv" style="width:450px; height:400px;">
+    <div id="blocklyDiv" style="width:560px; height:600px;">
       <template>
         <xml xmlns="https://developers.google.com/blockly/xml">
           <block x="0" y="15" type="osc" >

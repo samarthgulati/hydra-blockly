@@ -3,37 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    html,
-    body {
-      display: flex;
-      width: 900px; 
-      height: calc(450px - 1rem);
-      margin: 0;
-      padding: 0;
-      font-family: monospace;
-      overflow: hidden;
-    }
-    main {
-      display: flex;
-      flex-direction: column;
-      height: calc(450px - 1rem);
-      justify-content: space-between;
-    }
-    #blocklyDiv {
-      margin-right: 1rem;
-    }
-    #hydraCanvas {
-      width: calc(450px - 1rem);
-      height: calc(450px - 1rem);
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
   <title>Patterns</title>
 </head>
 <body>
   <main>
-    <h1>Patterns</h1>
-    <div id="blocklyDiv" style="width:450px; height:400px;">
+    <div id="blocklyDiv" style="width:560px; height:600px;">
       <template>
         <xml xmlns="https://developers.google.com/blockly/xml">
           <block x="0" y="0" type="osc" >
@@ -58,7 +33,7 @@
               </block>
             </next>
           </block>
-          <block x="0" y="70" type="osc" >
+          <block x="0" y="80" type="osc" >
             <value name="frequency">
               <block type="math_number">
                 <field name="NUM">60</field>
@@ -104,7 +79,7 @@
               </block>
             </next>
           </block>
-          <block x="0" y="175" type="osc" >
+          <block x="0" y="195" type="osc" >
             <value name="frequency">
               <block type="math_number">
                 <field name="NUM">60</field>
@@ -135,7 +110,7 @@
               </block>
             </next>
           </block>
-          <block x="0" y="280" type="osc" >
+          <block x="0" y="320" type="osc" >
             <value name="frequency">
               <block type="math_number">
                 <field name="NUM">60</field>
@@ -166,7 +141,7 @@
               </block>
             </next>
           </block>
-          <block x="0" y="425" type="render">
+          <block x="0" y="445" type="render">
             <field name="buffer"></field>
           </block>
         </xml>

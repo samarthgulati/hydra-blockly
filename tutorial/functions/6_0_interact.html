@@ -3,37 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    html,
-    body {
-      display: flex;
-      width: 900px; 
-      height: calc(450px - 1rem);
-      margin: 0;
-      padding: 0;
-      font-family: monospace;
-      overflow: hidden;
-    }
-    main {
-      display: flex;
-      flex-direction: column;
-      height: calc(450px - 1rem);
-      justify-content: space-between;
-    }
-    #blocklyDiv {
-      margin-right: 1rem;
-    }
-    #hydraCanvas {
-      width: calc(450px - 1rem);
-      height: calc(450px - 1rem);
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
   <title>Layering, Blending, and Recoloring</title>
 </head>
 <body>
   <main>
-    <h1>Visualize Music</h1>
-    <div id="blocklyDiv" style="width:450px; height:400px;">
+    <div id="blocklyDiv" style="width:560px; height:600px;">
       <template>
         <xml xmlns="https://developers.google.com/blockly/xml">
           <block x="0" y="0" type="shape" >
@@ -81,7 +56,14 @@
               </block>
             </next>
           </block>
-          <block x="0" y="0" type="shape" >
+          <block x="409" y="50" type="audioConfig">
+            <field name="showBins">true</field>
+            <field name="setBins">6</field>
+            <field name="setCutoff">1</field>
+            <field name="setScale">10</field>
+            <field name="setSmooth">0.1</field>
+          </block>
+          <block x="0" y="387" type="shape" >
             <value name="sides">
               <block type="math_number">
                 <field name="NUM">64</field>
@@ -130,7 +112,7 @@
               </block>
             </next>
           </block>
-          <block x="0" y="0" type="shape" >
+          <block x="0" y="194" type="shape" >
             <value name="sides">
               <block type="math_number">
                 <field name="NUM">2</field>
@@ -190,14 +172,7 @@
               </block>
             </next>
           </block>
-          <block type="audioConfig">
-            <field name="showBins">true</field>
-            <field name="setBins">6</field>
-            <field name="setCutoff">1</field>
-            <field name="setScale">10</field>
-            <field name="setSmooth">0.1</field>
-          </block>
-          <block x="0" y="425" type="render">
+          <block x="409" y="555" type="render">
             <field name="buffer"></field>
           </block>
         </xml>

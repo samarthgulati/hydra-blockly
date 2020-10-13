@@ -3,37 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    html,
-    body {
-      display: flex;
-      width: 900px; 
-      height: calc(450px - 1rem);
-      margin: 0;
-      padding: 0;
-      font-family: monospace;
-      overflow: hidden;
-    }
-    main {
-      display: flex;
-      flex-direction: column;
-      height: calc(450px - 1rem);
-      justify-content: space-between;
-    }
-    #blocklyDiv {
-      margin-right: 1rem;
-    }
-    #hydraCanvas {
-      width: calc(450px - 1rem);
-      height: calc(450px - 1rem);
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
   <title>Layering, Blending, and Recoloring</title>
 </head>
 <body>
   <main>
-    <h1>Layering, Blending, and Recoloring</h1>
-    <div id="blocklyDiv" style="width:450px; height:400px;">
+    <div id="blocklyDiv" style="width:560px; height:600px;">
       <template>
         <xml xmlns="https://developers.google.com/blockly/xml">
           <block x="0" y="0" type="noise">
@@ -81,7 +56,7 @@
               </block>
             </next>
           </block>
-          <block x="0" y="70" type="noise">
+          <block x="0" y="176" type="noise">
             <value name="scale">
               <block type="math_number">
                 <field name="NUM">10</field>
@@ -157,7 +132,7 @@
               </block>
             </next>
           </block>
-          <block x="0" y="175" type="noise" >
+          <block x="0" y="344" type="noise" >
             <value name="scale">
               <block type="math_number">
                 <field name="NUM">10</field>
@@ -208,7 +183,7 @@
               </block>
             </next>
           </block>
-          <block x="0" y="280" type="linearGradient" >
+          <block x="0" y="459" type="linearGradient" >
             <value name="h1">
               <block type="math_number">
                 <field name="NUM">0.01</field>
@@ -274,7 +249,7 @@
               </block>
             </next>
           </block>
-          <block x="0" y="425" type="render">
+          <block x="0" y="564" type="render">
             <field name="buffer"></field>
           </block>
         </xml>

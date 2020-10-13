@@ -3,7 +3,6 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
 		<title>Hydra Blockly</title>
 		<link rel="stylesheet" href="./css/reset.css">
 		<link rel="stylesheet" href="./css/reveal.css">
@@ -12,29 +11,78 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section data-transition="slide">
-					<h5>Inputs</h5>
-					<iframe style="width:900px; height:450px;" data-src="./functions/1_0_textures.html"></iframe>
+				<section data-transition="fade-in" data-background-color="black">
+					<video muted autoplay loop="infinite" style="border: none; height: 720px;" src="./assets/hydra-flyer.mp4" alt="">
 				</section>
-				<section data-transition="slide">
-					<h5>Inputs</h5>
-					<iframe style="width:900px; height:450px;" data-src="./functions/2_0_colors.html"></iframe>
+				<section data-transition="fade-in"  data-background-color="black">
+					<iframe style="width:960px; height:680px;" data-src="https://samarthgulati.com/generative-drawing/iframe-slides/logoes6/index.html"></iframe>
 				</section>
-				<section data-transition="slide">
+				<section 
+					data-id="c535ffcef10f15344fa105c76b487c6b" 
+					data-background-color="#000000" 
+					data-background-size="contain" 
+					data-background-video-muted="true" 
+					data-background-video-loop="true" 
+					data-background-video="https://s3.amazonaws.com/media-p.slid.es/videos/992298/jMLbGeXR/uis-rundown.mp4" 
+					data-background-video-thumb="https://s3.amazonaws.com/media-p.slid.es/videos/992298/jMLbGeXR/uis-rundown_thumb_00001.jpg" 
+					data-background-media-id="5737544" 
+					class="has-dark-background present" 
+					style="display: block;">
+				</section>
+				<section data-transition="fade-in">
+					<style>
+						#gd-showcase {
+							display: grid; 
+							grid-template-columns: repeat(3, 33%);
+							grid-template-rows: repeat(2, 50%);
+							justify-content: center; 
+							align-items: center; 
+							justify-items: center;
+							width: 960px; 
+							height: calc(960px * 2 / 3);
+							max-height: 796px;
+							max-width: calc(796px * 3 / 2); 
+							margin: auto;
+						}
+						/* @media (max-aspect-ratio: 3/2) {
+							#gd-showcase {
+								grid-template-columns: repeat(3, 30vw);
+								grid-template-rows: repeat(2, 30vw);
+							}
+						} */
+					</style>
+					<div id="gd-showcase">
+						<img style="object-fit:cover; width:100%; height: 100%; border:none;" src="https://samarthgulati.com/generative-drawing/assets/facemask.gif" alt="">
+						<img style="object-fit:cover; width:100%; height: 100%; border:none;" src="https://samarthgulati.com/generative-drawing/assets/blooming.gif" alt="">
+						<img style="object-fit:cover; width:100%; height: 100%; border:none;" src="https://samarthgulati.com/generative-drawing/assets/illusions.gif" alt="">
+						<img style="object-fit:cover; width:100%; height: 100%; border:none;" src="https://samarthgulati.com/generative-drawing/assets/dither-mirror.gif" alt="">
+						<img style="object-fit:cover; width:100%; height: 100%; border:none;" src="https://samarthgulati.com/generative-drawing/assets/flubber.gif" alt="">
+						<img style="object-fit:cover; width:100%; height: 100%; border:none;" src="https://samarthgulati.com/generative-drawing/assets/plotter.gif" alt="">
+					</div>
+				</section>
+				<section data-transition="fade-in">
+					<h5>Textures</h5>
+					<iframe style="width:1280px; height:600px;" data-src="./functions/1_0_textures.html"></iframe>
+				</section>
+				<section data-transition="fade-in">
+					<h5>Colors</h5>
+					<iframe style="width:1280px; height:600px;" data-src="./functions/2_0_colors.html"></iframe>
+				</section>
+				<section data-transition="fade-in">
 					<h5>Transforms</h5>
-					<iframe style="width:900px; height:450px;" data-src="./functions/3_0_transforms.html"></iframe>
+					<iframe style="width:1280px; height:600px;" data-src="./functions/3_0_transforms.html"></iframe>
 				</section>
-				<section data-transition="slide">
-					<h5>Transforms</h5>
-					<iframe style="width:900px; height:450px;" data-src="./functions/4_0_patterns.html"></iframe>
+				<section data-transition="fade-in">
+					<h5>Pattern</h5>
+					<iframe style="width:1280px; height:600px;" data-src="./functions/4_0_patterns.html"></iframe>
 				</section>
-				<section data-transition="slide">
-					<h5>Manipulate</h5>
-					<iframe style="width:900px; height:450px;" data-src="./functions/5_0_manipulate.html"></iframe>
+				<section data-transition="fade-in">
+					<h5>Layering, Blending, and Recoloring</h5>
+					<iframe style="width:1280px; height:600px;" data-src="./functions/5_0_manipulate.html"></iframe>
 				</section>
-				<section data-transition="slide">
+				<section data-transition="fade-in">
 					<h5>Interact and Audio Reactive</h5>
-					<iframe style="width:900px; height:450px;" data-src="./functions/6_0_interact.html"></iframe>
+					<iframe style="width:1280px; height:600px;" data-src="./functions/6_0_interact.html"></iframe>
 				</section>
 			</div>
 		</div>
@@ -45,8 +93,8 @@
 			// - https://github.com/hakimel/reveal.js#configuration
 			// - https://github.com/hakimel/reveal.js#dependencies
 			Reveal.initialize({
-				width: 960,
-  			height: 650,
+				width: 1280,
+  			height: 700,
         history: true
 			});
 			Reveal.addEventListener('slidechanged', 
