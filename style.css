@@ -37,6 +37,10 @@ details {
   top: 0;
 }
 
+#consoleEl {
+  overflow-x: hidden;
+}
+
 body.maxCanvas svg.blocklySvg text {
   fill: white !important;
 }
