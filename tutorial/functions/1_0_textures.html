@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html,
+    body {
+      display: flex;
+      width: 900px; 
+      height: calc(450px - 1rem);
+      margin: 0;
+      padding: 0;
+      font-family: monospace;
+      overflow: hidden;
+    }
+    main {
+      display: flex;
+      flex-direction: column;
+      height: calc(450px - 1rem);
+      justify-content: space-between;
+    }
+    #blocklyDiv {
+      margin-right: 1rem;
+    }
+    #hydraCanvas {
+      width: calc(450px - 1rem);
+      height: calc(450px - 1rem);
+    }
+  </style>
+  <title>Textures</title>
+</head>
+<body>
+  <main>
+    <h1>Textures</h1>
+    <div id="blocklyDiv" style="width:450px; height:400px;">
+      <template>
+        <xml xmlns="https://developers.google.com/blockly/xml">
+          <block x="0" y="15" type="osc" >
+            <value name="frequency">
+              <block type="math_number">
+                <field name="NUM">60</field>
+              </block>
+            </value>
+            <value name="sync">
+              <block type="math_number">
+                <field name="NUM">0.1</field>
+              </block>
+            </value>
+            <value name="offset">
+              <block type="math_number">
+                <field name="NUM">0</field>
+              </block>
+            </value>
+            <next>
+              <block type="out">
+                <field name="buffer">o0</field>
+              </block>
+            </next>
+          </block>
+          <block x="0" y="90" type="noise" >
+            <value name="scale">
+              <block type="math_number">
+                <field name="NUM">10</field>
+              </block>
+            </value>
+            <value name="offset">
+              <block type="math_number">
+                <field name="NUM">0.1</field>
+              </block>
+            </value>
+            <next>
+              <block type="out">
+                <field name="buffer">o1</field>
+              </block>
+            </next>
+          </block>
+          <block x="0" y="165" type="shape" >
+            <value name="sides">
+              <block type="math_number">
+                <field name="NUM">3</field>
+              </block>
+            </value>
+            <value name="radius">
+              <block type="math_number">
+                <field name="NUM">0.3</field>
+              </block>
+            </value>
+            <value name="smoothing">
+              <block type="math_number">
+                <field name="NUM">0.01</field>
+              </block>
+            </value>
+            <next>
+              <block type="out">
+                <field name="buffer">o2</field>    
+              </block>
+            </next>
+          </block>
+          <block x="0" y="240" type="voronoi" >
+            <value name="scale">
+              <block type="math_number">
+                <field name="NUM">5</field>
+              </block>
+            </value>
+            <value name="speed">
+              <block type="math_number">
+                <field name="NUM">0.3</field>
+              </block>
+            </value>
+            <value name="blending">
+              <block type="math_number">
+                <field name="NUM">0.3</field>
+              </block>
+            </value>
+            <next>
+              <block type="out">
+                <field name="buffer">o3</field>
+              </block>
+            </next>
+          </block>
+          <block x="0" y="315" type="render">
+            <field name="buffer"></field>
+          </block>
+        </xml>
+      </template>
+    </div>
+  </main>
+  <canvas id="hydraCanvas"></canvas>
+  <script src="https://cdn.jsdelivr.net/npm/blockly@3.20200402.1/blockly.min.js"></script>
+  <!-- <script src="https://unpkg.com/hydra-synth"></script> -->
+  <script src="../../hydra-synth.js"></script>
+  <script src="../../image-editing-glsl-functions.js"></script>
+  <script src="../../hydra.js"></script>
+  <script src="../../addSpecialBlock.js"></script>
+  <script src="../../generateBlocks.js"></script>
+  <script src="workspace.js"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Hydra Blockly</title>
+		<link rel="stylesheet" href="./css/reset.css">
+		<link rel="stylesheet" href="./css/reveal.css">
+		<link rel="stylesheet" href="./css/theme/white.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-transition="slide">
+					<h5>Inputs</h5>
+					<iframe style="width:900px; height:450px;" data-src="./functions/1_0_textures.html"></iframe>
+				</section>
+				<section data-transition="slide">
+					<h5>Inputs</h5>
+					<iframe style="width:900px; height:450px;" data-src="./functions/2_0_colors.html"></iframe>
+				</section>
+				<section data-transition="slide">
+					<h5>Transforms</h5>
+					<iframe style="width:900px; height:450px;" data-src="./functions/3_0_transforms.html"></iframe>
+				</section>
+				<section data-transition="slide">
+					<h5>Transforms</h5>
+					<iframe style="width:900px; height:450px;" data-src="./functions/4_0_patterns.html"></iframe>
+				</section>
+				<section data-transition="slide">
+					<h5>Manipulate</h5>
+					<iframe style="width:900px; height:450px;" data-src="./functions/5_0_manipulate.html"></iframe>
+				</section>
+				<section data-transition="slide">
+					<h5>Interact and Audio Reactive</h5>
+					<iframe style="width:900px; height:450px;" data-src="./functions/6_0_interact.html"></iframe>
+				</section>
+			</div>
+		</div>
+		<script src="./reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				width: 960,
+  			height: 650,
+        history: true
+			});
+			Reveal.addEventListener('slidechanged', 
+        function (e) {
+					var iframe = e.previousSlide.querySelector('iframe');
+					if(iframe) iframe.src = '';
+					iframe = e.currentSlide.querySelector('iframe');
+					if(!iframe) return;
+					iframe.src = iframe.dataset.src;
+				}
+      )
+		</script>
+	</body>
+</html>
+
