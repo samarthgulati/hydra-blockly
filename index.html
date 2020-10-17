@@ -15,7 +15,8 @@
 		<input type="checkbox" id="liveUpdate" checked>
     <button disabled id="runBtn">Run</button>
     <label for="maxCanvas">Maximize Canvas</label>
-		<input type="checkbox" id="maxCanvas" checked>
+    <input type="checkbox" id="maxCanvas" checked>
+    <button id="saveBtn">Save</button>
 	</nav>
   <div class="environment">
     <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
@@ -28,7 +29,11 @@
     </summary>
     <pre id="consoleEl"></pre>
   </details>
+  <div id="overlay" class="hidden">
+    Loading...
+  </div>
   <script src="https://cdn.jsdelivr.net/npm/blockly@3.20200402.1/blockly.min.js"></script>
+  <script src="./json-url/json-url.js"></script>
   <!-- <script src="https://unpkg.com/hydra-synth"></script> -->
   <script src="hydra-synth.js"></script>
   <script src="image-editing-glsl-functions.js"></script>

@@ -3,6 +3,9 @@ var maxCanvas = document.getElementById("maxCanvas");
 var consoleEl = document.getElementById("consoleEl");
 var runBtn = document.getElementById("runBtn");
 var copyCode = document.getElementById("copyCode");
+var overlay = document.getElementById("overlay");
+var saveBtn = document.getElementById('saveBtn');
+var jsonUrl = JsonUrl('lzma');
 
 var options = { 
 	toolbox : toolbox, 
@@ -128,6 +131,47 @@ function copyCodeToClipboard() {
   document.body.removeChild(textArea);
 }
 
+function showOverlay() {
+	overlay.classList.remove('hidden');
+}
+
+function hideOverlay() {
+	overlay.classList.add('hidden');
+}
+
+function saveToURL() {
+	showOverlay();
+	var xmlDom = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
+	var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
+	var searchParams = new URLSearchParams(window.location.search);
+  // searchParams.set('state', btoa(JSON.stringify(state)));
+  jsonUrl.compress({xmlText}).then(stateParam => { 
+    searchParams.set('state', stateParam);
+    var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + "?" + searchParams.toString();
+    window.history.pushState({ path: newUrl }, '', newUrl);
+    hideOverlay();
+  });
+}
+
+function loadFromURL() {
+  showOverlay();
+  var searchParams = new URLSearchParams(window.location.search);
+  if(!searchParams.has('state')) {
+    hideOverlay();
+    return;
+  }
+  jsonUrl.decompress(searchParams.get('state')).then(({xmlText}) => {
+		var temp = document.createElement('template');
+		temp.innerHTML = xmlText;
+		var workspaceBlocks = temp.content.cloneNode(true);
+		workspace.clear();
+		/* Load blocks to workspace. */
+		Blockly.Xml.domToWorkspace(workspaceBlocks.firstElementChild, workspace);
+		updateCanvas({});
+		hideOverlay();
+	});
+}
+saveBtn.addEventListener('click', saveToURL);
 runBtn.addEventListener('click', updateCanvas);
 copyCode.addEventListener('click', copyCodeToClipboard);
 maxCanvas.addEventListener('change', function() {
@@ -148,3 +192,4 @@ workspace.addChangeListener(updateCanvas);
 hydraCanvas.addEventListener('dblclick', function(e) {
 	hydraCanvas.classList.toggle('moveToTop');
 });
+loadFromURL();

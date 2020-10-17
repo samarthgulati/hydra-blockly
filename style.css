@@ -115,3 +115,21 @@ body.maxCanvas details {
 body.maxCanvas #hydraCanvas.moveToTop {
   z-index: 100;
 }
+
+#overlay {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+#overlay.hidden {
+  display: none;
+}
