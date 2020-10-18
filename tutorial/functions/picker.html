@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <style>
+      html, body {
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="picker"></div>				
+    <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+    <script>
+      var colorPicker = new iro.ColorPicker("#picker", {
+        // Set the size of the color picker
+        width: 500,
+        // Set the initial color to pure red
+        color: "#f00"
+      });
+    </script>
+  </body>
+</html>
