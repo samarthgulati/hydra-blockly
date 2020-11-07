@@ -73,13 +73,13 @@ function updateCanvas(e) {
 vid.crossOrigin = 'anonymous';
 vid.autoplay = true;
 vid.loop = true;
-vid.src = window._blocklyHydra.videoSrc;
+vid.src = "${window._blocklyHydra.videoSrc}";
 s2.init({src: vid});\n` + code
 	}
 	if(window._blocklyHydra.imageSrc !== null) {
 		code = `var imgEl = document.createElement('img');
 imgEl.crossOrigin = 'anonymous';
-imgEl.src = window._blocklyHydra.imageSrc;
+imgEl.src = "${window._blocklyHydra.imageSrc}";
 s1.init({src: imgEl});\n` + code;
 	}
 	if(customFunctionsIncluded.length > 0) {
@@ -139,28 +139,27 @@ function hideOverlay() {
 	overlay.classList.add('hidden');
 }
 
+function updateURL(stateParam) {
+	var searchParams = new URLSearchParams(window.location.search);
+	searchParams.set('state', stateParam);
+	var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + "?" + searchParams.toString();
+	window.history.pushState({ path: newUrl }, '', newUrl);
+}
+
 function saveToURL() {
 	showOverlay();
 	var xmlDom = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
 	var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
-	var searchParams = new URLSearchParams(window.location.search);
   // searchParams.set('state', btoa(JSON.stringify(state)));
   jsonUrl.compress({xmlText}).then(stateParam => { 
-    searchParams.set('state', stateParam);
-    var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + "?" + searchParams.toString();
-    window.history.pushState({ path: newUrl }, '', newUrl);
+		updateURL(stateParam);
+		if(p) p.send(stateParam);
     hideOverlay();
   });
 }
 
-function loadFromURL() {
-  showOverlay();
-  var searchParams = new URLSearchParams(window.location.search);
-  if(!searchParams.has('state')) {
-    hideOverlay();
-    return;
-  }
-  jsonUrl.decompress(searchParams.get('state')).then(({xmlText}) => {
+function loadState(compressedState) {
+	jsonUrl.decompress(compressedState).then(({xmlText}) => {
 		var temp = document.createElement('template');
 		temp.innerHTML = xmlText;
 		var workspaceBlocks = temp.content.cloneNode(true);
@@ -170,6 +169,16 @@ function loadFromURL() {
 		updateCanvas({});
 		hideOverlay();
 	});
+}
+
+function loadFromURL() {
+  showOverlay();
+  var searchParams = new URLSearchParams(window.location.search);
+  if(!searchParams.has('state')) {
+    hideOverlay();
+    return;
+	}
+	loadState(searchParams.get('state'));
 }
 saveBtn.addEventListener('click', saveToURL);
 runBtn.addEventListener('click', updateCanvas);
