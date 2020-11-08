@@ -153,7 +153,7 @@ function saveToURL() {
   // searchParams.set('state', btoa(JSON.stringify(state)));
   jsonUrl.compress({xmlText}).then(stateParam => { 
 		updateURL(stateParam);
-		if(p && p.remotePort) p.send(stateParam);
+		if(conn && conn._open) conn.send(stateParam);
     hideOverlay();
   });
 }

@@ -10,10 +10,18 @@ document.querySelector('#handshake').addEventListener('click', e => {
   }
 });
 
-var p = new SimplePeer({
-  initiator: location.hash === '#transmitter',
-  trickle: false
-})
+var p = new Peer();
+var conn;
+// new SimplePeer({
+//   initiator: location.hash === '#transmitter',
+//   trickle: false
+// })
+
+p.on('open', function(id) {
+  if(location.hash === '#transmitter') {
+    document.querySelector('#outgoing').textContent = id;
+  }
+});
 
 p.on('error', err => console.log('error', err))
 
@@ -23,17 +31,29 @@ p.on('signal', data => {
 })
 
 document.querySelector('form').addEventListener('submit', ev => {
-  ev.preventDefault()
-  p.signal(JSON.parse(document.querySelector('#incoming').value))
-})
+  ev.preventDefault();
+  conn = p.connect(document.querySelector('#incoming').value);
+  conn.on('open', () => {
+    modal.close();
+    console.log('CONNECT');
+  });
+  conn.on('data', data => {
+    showOverlay();
+    updateURL(data);
+    loadState(data);
+  });
+});
 
-p.on('connect', () => {
-  modal.close()
-  console.log('CONNECT')
-})
+p.on('connection', function(c) {
+  conn  = c;
+  // uncomment to allow receiver to transmit
+  // conn.on('data', data => {
+  //   showOverlay();
+  //   updateURL(data);
+  //   loadState(data);
+  // });
+  modal.close();
+  console.log('CONNECT');
+});
 
-p.on('data', data => {
-  showOverlay();
-  updateURL(data);
-  loadState(data);
-})
+
