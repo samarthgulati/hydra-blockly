@@ -788,7 +788,7 @@ var css_gradients_glsl_fns = [
     // color += (dither/255.0) * fract(magic.z * fract(dot(_st, magic.xy))) - (dither*0.5/255.0);
     return vec4(color, 1.0);`
   }
-]
+];
 
 var image_filter_fns = [
 //   void dx_blur( out vec4 fragColor, in vec2 fragCoord )
@@ -1173,6 +1173,36 @@ var distort_fns = [{
 
    return uv;`
 },{
+  name: 'swirl',
+  type: 'coord',
+  inputs: [
+    {
+      type: 'float',
+      name: 'offset',
+      default: 1,
+    },
+    {
+      type: 'float',
+      name: 'speed',
+      default: 0,
+    },
+    {
+      type: 'float',
+      name: 'power',
+      default: 1,
+    }
+  ],
+  glsl: /* GLSL */`   
+    vec2 st = _st;
+    st -= 0.5;
+    float radius = length(st);
+    float theta = power*radius*sin(offset-speed*time);
+    float s = sin(theta);
+    float c = cos(theta);
+    st.x = dot(st, vec2(c, -s));
+    st.y = dot(st, vec2(s, c));
+    return 0.5 * (st + 1.0);`
+},{
   // https://www.shadertoy.com/view/lstfzl
   name: 'radialDistort',
   type: 'coord',
@@ -1270,4 +1300,127 @@ return vec4(color, 1.0);`
    float pi = 2.*3.1416;
    a = mod(a,pi/nSides);
    return (r) * vec2(cos(a), sin(a));`
+},
+{
+  name: 'blur',
+  type: 'src',
+  inputs: [
+    {
+      type: 'sampler2D',
+      name: 'tex',
+      default: NaN,
+    },
+    {
+      type: 'float',
+      name: 'multiplier',
+      default: 1,
+    }
+  ],
+  glsl:
+` const int mSize = 5; // default 11
+  const int kSize = (mSize-1)/2;
+  float kernel[mSize];
+  vec3 final_colour = vec3(0.0);
+
+  //create the 1-D kernel
+  float sigma = 7.0;
+  float Z = 0.0;
+  for (int j = 0; j <= kSize; ++j) {
+    float x = float(j);
+    kernel[kSize+j] = kernel[kSize-j] = .39894*exp(-0.5*x*x/(sigma*sigma))/sigma;
+  }
+
+  //get the normalization factor (as the gaussian has been clamped)
+  for (int j = 0; j < mSize; ++j) {
+    Z += kernel[j];
+  }
+
+  //read out the texels
+  for (int i=-kSize; i <= kSize; ++i) {
+    for (int j=-kSize; j <= kSize; ++j) {
+      final_colour += kernel[kSize+j]*kernel[kSize+i] * texture2D(tex, (gl_FragCoord.xy+vec2(float(i),float(j))) / resolution.xy).rgb * multiplier;
+    }
+  }
+  return vec4(final_colour/(Z*Z), 1.0);`
+},
+// https://github.com/BrutPitt/glslSmartDeNoise
+{
+  name: 'denoise',
+  type: 'src',
+  inputs: [
+    {
+      type: 'sampler2D',
+      name: 'tex',
+      default: NaN,
+    },
+    {
+      type: 'float',
+      name: 'sigma',
+      default: 1,
+    },
+    {
+      type: 'float',
+      name: 'threshold',
+      default: 1,
+    }
+  ],
+  glsl: /* GLSL */`
+    float INV_SQRT_OF_2PI = 0.39894228040143267793994605993439;  // 1.0/SQRT_OF_2PI
+    float INV_PI = 0.31830988618379067153776752674503;
+
+    float invSigmaQx2 = .5 / (sigma * sigma);      // 1.0 / (sigma^2 * 2.0)
+    float invSigmaQx2PI = INV_PI * invSigmaQx2;    // 1/(2 * PI * sigma^2)
+
+    float invThresholdSqx2 = .5 / (threshold * threshold);     // 1.0 / (sigma^2 * 2.0)
+    float invThresholdSqrt2PI = INV_SQRT_OF_2PI / threshold;   // 1.0 / (sqrt(2*PI) * sigma^2)
+    vec2 st = gl_FragCoord.xy / resolution.xy;
+    vec4 centrPx = texture2D(tex,st); 
+
+    float zBuff = 0.0;
+    vec4 aBuff = vec4(0.0);
+    vec2 size = vec2(1.0, 1.0);
+
+    for(float dx = -0.005; dx <= 0.005; dx+=0.0025) {
+        for(float dy = -0.005; dy <= 0.005; dy+=0.0025) {
+            vec2 d = vec2(dx, dy);
+            float blurFactor = exp( -dot(d, d) * invSigmaQx2 ) * invSigmaQx2PI;
+
+            vec4 walkPx =  texture2D(tex,st+d/size);
+            vec4 dC = walkPx-centrPx;
+            float deltaFactor = exp( -dot(dC, dC) * invThresholdSqx2) * invThresholdSqrt2PI * blurFactor;
+
+            zBuff += deltaFactor;
+            aBuff += deltaFactor*walkPx;
+        }
+    }
+    return aBuff/zBuff; 
+`
+},
+{
+  name: 'halftone',
+  type: 'src',
+  inputs: [
+    {
+      type: 'sampler2D',
+      name: 'tex',
+      default: NaN,
+    },
+    {
+      type: 'float',
+      name: 'frequency',
+      default: 40,
+    }
+  ],
+  glsl: /* GLSL */`
+  vec2 st = _st;
+  vec2 nearest = 2.0*fract(frequency * st) - 1.0;
+  float dist = length(nearest);
+  // Use a texture to modulate the size of the dots
+  vec3 texcolor = texture2D(tex, st).rgb; // Unrotated coords
+  float radius = sqrt(1.0-texcolor.g); // Use green channel
+  vec3 white = vec3(1.0, 1.0, 1.0);
+  vec3 black = vec3(0.0, 0.0, 0.0);
+  vec3 fragcolor = mix(black, white, step(radius, dist));
+  return vec4(fragcolor, 1.0);
+  `
 }];

@@ -2907,7 +2907,7 @@ module.exports = [
   inputs: [
     {
       type: 'float',
-      name: 'scrollX',
+      name: 'amount',
       default: 0.5,
     },
 {
@@ -2945,7 +2945,7 @@ module.exports = [
   inputs: [
     {
       type: 'float',
-      name: 'scrollY',
+      name: 'amount',
       default: 0.5,
     },
 {
@@ -2955,7 +2955,7 @@ module.exports = [
     }
   ],
   glsl:
-`   _st.y += _c0.r*scrollY + time*speed;
+`   _st.y += _c0.r*amount + time*speed;
    return _st;`
 },
 {
