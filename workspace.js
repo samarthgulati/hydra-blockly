@@ -197,6 +197,10 @@ liveUpdate.addEventListener('change', function() {
 		runBtn.removeAttribute('disabled');
 	}
 });
+// hide vertical bar
+workspace.scrollbar.vScroll.svgGroup_.style.display = 'none';
+// hide horizontal bar
+workspace.scrollbar.hScroll.svgGroup_.style.display = 'none';
 workspace.addChangeListener(updateCanvas);
 hydraCanvas.addEventListener('dblclick', function(e) {
 	hydraCanvas.classList.toggle('moveToTop');
