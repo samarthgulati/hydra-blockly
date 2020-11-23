@@ -11,9 +11,10 @@ document.querySelector('#handshake').addEventListener('click', e => {
 });
 
 var p = new Peer({
-  host: '//hydra-blockly-peer.glitch.me',
+  // host: '//hydra-blockly-peer.glitch.me',
+  host: '//0.peerjs.com',
   port: 443,
-	path: '/peerjs'
+	path: '/'
 });
 var conn;
 // new SimplePeer({
