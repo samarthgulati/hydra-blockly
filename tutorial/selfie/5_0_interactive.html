@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../functions/style.css">
+  <title>Interactive</title>
+</head>
+<body>
+  <main>
+    <div id="blocklyDiv" style="width:560px; height:600px;">
+      <template>
+        <xml xmlns="https://developers.google.com/blockly/xml">
+          <block type="webcam" x="0" y="15" >
+            <field name="buffer">0</field>
+            <next>
+              <block type="scale">
+                <value name="amount">
+                  <block type="math_number">
+                    <field name="NUM">1</field>
+                  </block>
+                </value>
+                <value name="xMult">
+                  <block type="math_number">
+                    <field name="NUM">-1.33</field>
+                  </block>
+                </value>
+                <value name="yMult">
+                  <block type="math_number">
+                    <field name="NUM">1</field>
+                  </block>
+                </value>
+                <value name="offsetX">
+                  <block type="math_number">
+                    <field name="NUM">0.5</field>
+                  </block>
+                </value>
+                <value name="offsetY">
+                  <block type="math_number">
+                    <field name="NUM">0.5</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="mask">
+                    <statement name="texture">
+                      <block type="shape">
+                        <value name="sides">
+                          <block type="math_number">
+                            <field name="NUM">2</field>
+                          </block>
+                        </value>
+                        <value name="radius">
+                          <block type="anon">
+                            <value name="fn">
+                              <block type="text">
+                                <field name="TEXT">0.01 + a.fft[0]</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <value name="smoothing">
+                          <block type="math_number">
+                            <field name="NUM">0.1</field>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="scroll">
+                            <value name="scrollX">
+                              <block type="anon">
+                                <value name="fn">
+                                  <block type="text">
+                                    <field name="TEXT">0.5-mouse.x/600</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                            <value name="scrollY">
+                              <block type="anon">
+                                <value name="fn">
+                                  <block type="text">
+                                    <field name="TEXT">0.5-mouse.y/600</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                            <value name="speedX">
+                              <block type="math_number">
+                                <field name="NUM">0</field>
+                              </block>
+                            </value>
+                            <value name="speedY">
+                              <block type="math_number">
+                                <field name="NUM">0</field>
+                              </block>
+                            </value>
+                          </block>
+                        </next>
+                      </block>
+                    </statement>
+                    <next>
+                      <block type="out">
+                        <field name="buffer">o0</field>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </xml>
+      </template>
+    </div>
+  </main>
+  <canvas id="hydraCanvas"></canvas>
+  <script src="https://cdn.jsdelivr.net/npm/blockly@3.20200402.1/blockly.min.js"></script>
+  <!-- <script src="https://unpkg.com/hydra-synth"></script> -->
+  <script src="../../hydra-synth.js"></script>
+  <script src="../../image-editing-glsl-functions.js"></script>
+  <script src="../../hydra.js"></script>
+  <script src="../../addSpecialBlock.js"></script>
+  <script src="../../generateBlocks.js"></script>
+  <script src="../functions/workspace.js"></script>
+</body>
+</html>
